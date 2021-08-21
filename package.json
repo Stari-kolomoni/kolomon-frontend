@@ -1,13 +1,13 @@
 {
-  "name": "gulp-nunjucks-sass-template",
-  "title": "A Gulp 4 template including SCSS, Nunjucks, TypeScript (via webpack) and more",
-  "author": "Simon Goričar",
-  "url": "https://github.com/DefaultSimon",
-  "version": "2.0.2",
+  "name": "kolomon-frontend",
+  "title": "A english-to-slovenian D&D translation and dictionary tool.",
+  "author": "DefaultSimon, Grimpy101",
+  "url": "https://github.com/Stari-kolomoni",
+  "version": "0.1.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/DefaultSimon/gulp-nunjucks-sass-template"
+    "url": "https://github.com/Stari-kolomoni/kolomon-frontend"
   },
   "scripts": {
     "dev": "gulp --require @babel/register --gulpfile tasks/index.ts",

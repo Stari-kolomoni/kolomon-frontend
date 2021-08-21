@@ -10,9 +10,6 @@
 // include-media is loaded on demand with the "media" module.
 
 @use "vars" as vars;
-@use "vendor/bones" with (
-    $font-family: vars.$font-family-native,
-);
 
 
 ///
@@ -26,4 +23,3 @@
 // Load all (page) layouts
 ///
 @use "layout/page-index";
-@use "layout/page-bones";
