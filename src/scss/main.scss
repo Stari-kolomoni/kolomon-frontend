@@ -1,0 +1,29 @@
+/**
+ * This SCSS file serves as an entry file for the entire stylesheet.
+ */
+
+///
+// Load libraries
+///
+@use "vendor/normalize";
+@use "vendor/purecss";
+// include-media is loaded on demand with the "media" module.
+
+@use "vars" as vars;
+@use "vendor/bones" with (
+    $font-family: vars.$font-family-native,
+);
+
+
+///
+// Load base SCSS
+///
+@use "base/defaults";
+@use "base/fonts";
+
+
+///
+// Load all (page) layouts
+///
+@use "layout/page-index";
+@use "layout/page-bones";
