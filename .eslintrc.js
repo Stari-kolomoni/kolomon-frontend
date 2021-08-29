@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 module.exports = {
     root: true,
     parser: "@typescript-eslint/parser",
@@ -22,13 +21,4 @@ module.exports = {
         "@typescript-eslint/ban-ts-comment": "off",
         "max-len": ["error", { comments: 120, code: 90 }],
     },
-    overrides: [
-        {
-            files: ["tasks/**/*.ts"],
-            rules: {
-                "import/no-extraneous-dependencies": "off",
-                "no-param-reassign": "off",
-            }
-        }
-    ]
 };

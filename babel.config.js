@@ -1,13 +1,8 @@
 const config = {
     presets: [
-        [
-            "@babel/preset-env",
-            {
-                useBuiltIns: "entry",
-                corejs: "3.9",
-            },
-        ],
+        "@babel/preset-env",
         "@babel/preset-typescript",
+        "@babel/preset-react",
     ],
 };
 
