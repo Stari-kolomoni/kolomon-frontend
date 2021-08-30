@@ -13,8 +13,8 @@
     "dev": "NODE_ENV=development webpack serve --config config/webpack.config.js --hot --open",
     "buildProduction": "NODE_ENV=production webpack --config config/webpack.config.js",
     "buildDev": "NODE_ENV=development webpack --config config/webpack.config.js",
-    "lintTS": "eslint --cache src/**/*.ts",
-    "lintTSFix": "eslint --cache --fix src/**/*.ts",
+    "lintTS": "eslint --cache src/app/**/*.{js,jsx,ts,tsx}",
+    "lintTSFix": "eslint --cache --fix src/**/*.{js,jsx,ts,tsx}",
     "lintSCSS": "stylelint --cache src/scss/**/*.{css,scss}",
     "lintSCSSFix": "stylelint --cache --fix src/scss/**/*.{css,scss}"
   },
