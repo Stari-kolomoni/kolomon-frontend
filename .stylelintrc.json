@@ -37,8 +37,6 @@
     ]
   },
   "ignoreFiles": [
-    "src/scss/vendor/include-media/**/*",
-    "src/scss/vendor/normalize/**/*",
-    "src/scss/vendor/purecss/**/*"
+    "src/scss/vendor/**/*"
   ]
 }
