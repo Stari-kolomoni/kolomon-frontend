@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "../../scss/main.scss";
+
 class KolomonApp extends Component {
     render(): JSX.Element {
         return (

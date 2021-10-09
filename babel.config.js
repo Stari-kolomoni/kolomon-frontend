@@ -4,6 +4,10 @@ const config = {
         "@babel/preset-typescript",
         "@babel/preset-react",
     ],
+    plugins: [
+        "@babel/plugin-proposal-class-properties",
+        "inline-json-import"
+    ]
 };
 
 module.exports = config;

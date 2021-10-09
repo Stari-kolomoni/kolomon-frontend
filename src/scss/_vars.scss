@@ -1,37 +1,44 @@
 /**
  * VARIABLES
- *
- * Store your colors, fonts, sizes and other variables.
  */
 
 
-///
-// COLOURS
-// Customize/create/remove your colour variables here.
-///
+/*
+ * Colours
+ * This palette is copied from the V2 design palette - see the kolomon-design repository for details.
+ */
 
-$colour-white: #efefef;
-$colour-black: #1a1a1a;
+$background-primary: #F8F6F2;
+$background-elevated: #FDFDFC;
 
-$color-background-dark: #222;
+$body-text: #282517;
+$body-text-lighter: #555242;
+$body-text-even-lighter: #777463;
+$body-text-white: #FDFDFC;
 
-// Primary
-$colour-primary-light: #bef67a;
-$colour-primary: #8bc34a;
-$colour-primary-dark: #58812f;
+// Mostly horizontal separators and such
+$light-indicator: #BFBBA4;
 
-// Secondary
-$colour-secondary-light: #009688;
-$colour-secondary: #52c7b8;
-$colour-secondary-dark: #00675b;
+// Also represents slovene words
+$primary: #E39148;
+$primary-dark: #C96E1D;
+
+// Also represents english words
+$secondary: #CCB43B;
+$secondary-dark: #907E23;
+
+// Generic success or error colours
+$success: #AED22C;
+$error: #E64834;
+
+// The header is slightly darker - elevated from the background
+$header-background: #ECE7DF;
+$header-background-darker: #D6C9B8;
 
 
-///
-// FONTS
-// Customize/create/remove your font variables here.
-///
+$button-default-background: #CFCBC1;
+$button-primary-background: #C86E1D;
+$button-secondary-background: #8C7A22;
 
-// Based on GitHub's font stack
-// More information: https://css-tricks.com/snippets/css/system-font-stack/
-$font-family-native: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$link-blue: #0371D0;
+$link-dark-blue: #2B4488;

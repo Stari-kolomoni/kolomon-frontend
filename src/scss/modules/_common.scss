@@ -4,10 +4,10 @@
 ////
 
 ///
-/// Will unqote the argument if it is a string.
+/// Will unquote the argument if it is a string.
 /// @access private
 ///
-@function _unqote-if-string($var) {
+@function _unquote-if-string($var) {
     @if type-of($var) == string {
         @return unquote($var);
     }
@@ -53,8 +53,8 @@
 /// If only one argument is passed, both rules will be the same (a square).
 ///
 @mixin size-rectangle($width, $height: $width) {
-    height: _unqote-if-string($height);
-    width: _unqote-if-string($width);
+    height: _unquote-if-string($height);
+    width: _unquote-if-string($width);
 }
 
 ///
@@ -62,10 +62,10 @@
 /// Generally use relativePos/absolutePos/fixedPos/stickyPos mixins instead.
 ///
 @mixin _positioning($top: 0, $right: $top, $bottom: $top, $left: $right) {
-    bottom: _unqote-if-string($bottom);
-    left: _unqote-if-string($left);
-    right: _unqote-if-string($right);
-    top: _unqote-if-string($top);
+    bottom: _unquote-if-string($bottom);
+    left: _unquote-if-string($left);
+    right: _unquote-if-string($right);
+    top: _unquote-if-string($top);
 }
 
 ///

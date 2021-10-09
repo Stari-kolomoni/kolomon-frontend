@@ -6,20 +6,13 @@
 // Load libraries
 ///
 @use "vendor/normalize";
-@use "vendor/purecss";
+// TODO I don't think we need pure.css
+// @use "vendor/purecss";
 // include-media is loaded on demand with the "media" module.
 
-@use "vars" as vars;
-
 
 ///
-// Load base SCSS
+// Load the design system and specific styles
 ///
-@use "base/defaults";
-@use "base/fonts";
-
-
-///
-// Load all (page) layouts
-///
-@use "layout/page-index";
+@use "design-system";
+@use "kolomon";

@@ -4,15 +4,14 @@
 
 const { mainConfig, baseConfig } = require("./configuration");
 const babelConfig = require("../babel.config");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { DefinePlugin } = require("webpack");
 
 const webpackConfig = {
     mode: mainConfig.isProductionEnv ? "production" : "development",
 
     entry: [
-        // "react-hot-loader/patch",
         mainConfig.src.appEntrypoint
     ],
     output: {
@@ -29,14 +28,13 @@ const webpackConfig = {
             ".js",
             ".jsx",
         ],
-        // alias: {
-        //     "react-dom": "@hot-loader/react-dom"
-        // }
     },
 
     watchOptions: {
         aggregateTimeout: 100,
     },
+    // TODO is this in production as well? the webpack documentation mentions something along those lines
+    devtool: mainConfig.isProductionEnv ? false : "source-map",
     devServer: {
         static: baseConfig.distDirectory
     },
@@ -44,11 +42,22 @@ const webpackConfig = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.s[ac]ss$/i,
+                type: "asset/resource",
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    "css-loader",
-                    "sass-loader"
+                    // "style-loader",
+                    // "css-loader",
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            implementation: require("dart-sass"),
+                            sassOptions: {
+                                fiber: require("fibers"),
+                                sourceMap: !mainConfig.isProductionEnv,
+                                outputStyle: mainConfig.isProductionEnv ? "compressed" : "expanded",
+                            }
+                        }
+                    }
                 ]
             },
             {
@@ -68,7 +77,10 @@ const webpackConfig = {
             filename: mainConfig.dist.htmlFilename,
         }),
         new CleanWebpackPlugin(),
-        // new MiniCssExtractPlugin()
+        new DefinePlugin({
+            IS_PRODUCTION: mainConfig.isProductionEnv,
+            API_ENDPOINT_URL: mainConfig.isProductionEnv ? "https://TODO.KOLOMON.FINAL.URL" : "https://localhost:8000",
+        }),
     ]
 };
 

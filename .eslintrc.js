@@ -21,4 +21,12 @@ module.exports = {
         "max-len": ["warn", { comments: 120, code: 90 }],
         "react/prefer-stateless-function": "warn"
     },
+    overrides: [
+        {
+            files: ["src/app/core/logger.ts"],
+            rules: {
+                "no-console": "off",
+            }
+        }
+    ]
 };
