@@ -81,7 +81,7 @@ const webpackConfig = {
         new DefinePlugin({
             IS_PRODUCTION: mainConfig.isProductionEnv,
             // TODO move this into the config file
-            API_ENDPOINT_URL: mainConfig.isProductionEnv ? "\"https://TODO.KOLOMON.FINAL.URL\"" : "\"https://localhost:8000\"",
+            API_ENDPOINT_URL: mainConfig.isProductionEnv ? "\"https://TODO.KOLOMON.FINAL.URL\"" : "\"http://localhost:8000\"",
         }),
     ]
 };
