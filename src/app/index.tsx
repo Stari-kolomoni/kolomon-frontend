@@ -1,8 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
+import "../scss/main.scss";
+
+import { BrowserRouter } from "react-router-dom";
 import Logger, { Colour } from "./core/logger";
+
+import { store } from "./store";
 import KolomonApp from "./kolomon";
+
+// DEBUGONLY Developer access to the programmatic API
+if (!IS_PRODUCTION) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    import KolomonApi from "./core/api";
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.kolomon = KolomonApi;
+}
 
 const log = new Logger("index", Colour.BDAZZLED_BLUE);
 
@@ -18,4 +34,15 @@ if (!IS_PRODUCTION) {
     log.groupEnd();
 }
 
-ReactDOM.render(<KolomonApp />, document.getElementById("root"));
+const RootApp = () => (
+    <Provider store={store}>
+        <BrowserRouter>
+            <KolomonApp />
+        </BrowserRouter>
+    </Provider>
+);
+
+ReactDOM.render(
+    <RootApp />,
+    document.getElementById("root"),
+);

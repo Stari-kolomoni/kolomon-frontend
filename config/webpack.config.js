@@ -36,7 +36,8 @@ const webpackConfig = {
     // TODO is this in production as well? the webpack documentation mentions something along those lines
     devtool: mainConfig.isProductionEnv ? false : "source-map",
     devServer: {
-        static: baseConfig.distDirectory
+        static: baseConfig.distDirectory,
+        historyApiFallback: true,
     },
 
     module: {
@@ -79,7 +80,8 @@ const webpackConfig = {
         new CleanWebpackPlugin(),
         new DefinePlugin({
             IS_PRODUCTION: mainConfig.isProductionEnv,
-            API_ENDPOINT_URL: mainConfig.isProductionEnv ? "https://TODO.KOLOMON.FINAL.URL" : "https://localhost:8000",
+            // TODO move this into the config file
+            API_ENDPOINT_URL: mainConfig.isProductionEnv ? "\"https://TODO.KOLOMON.FINAL.URL\"" : "\"https://localhost:8000\"",
         }),
     ]
 };
