@@ -11,6 +11,8 @@ const log = new Logger("requests", Colour.CAMEL);
 
 const authStorage = new KolomonStorage("local", "auth");
 
+type JSONObject = Record<string, any> | any[] | null;
+
 if (!window.fetch) {
     log.error("The Fetch API is not available in this browser!");
     throw new Error("The Fetch API is not available!");
@@ -36,19 +38,21 @@ const setGlobalBearerToken = (token: string): void => {
  * @param url - URL to request.
  * @param method - HTTP method to use.
  * @param withAuthorization - Whether to include the Authorization header, if possible.
- * @param data - Additional JSON/Form data to send in the request body.
- * @param dataType - Specifies in which way the data parameter should be sent: JSON or x-www-form-urlencoded.
+ * @param data - Additional JSON data/form data/URL parameters to send in the request body.
+ * @param dataType - Specifies in which way the data parameter should be sent:
+ * JSON, x-www-form-urlencoded or url parameter.
  */
 const request = async (
     url: string,
     method: "GET" | "HEAD" | "POST" | "PUT" | "DELETE"
         | "CONNECT" | "OPTIONS" | "TRACE" | "PATCH",
     withAuthorization = true,
-    data: Record<string, any> | null = null,
-    dataType: "json" | "form" = "json",
-): Promise<[Response, Record<string, any> | null]> => {
+    data: JSONObject = null,
+    dataType: "json" | "form" | "url" = "json",
+): Promise<[Response, JSONObject]> => {
     try {
         // Formulate correct headers (Authorization, Content-Type)
+        let requestUrl = url;
         const headers = new Headers();
 
         headers.append("Accept", "application/json");
@@ -71,11 +75,14 @@ const request = async (
             bodyData = JSON.stringify(data);
         } else if (data !== null && dataType === "form") {
             bodyData = new URLSearchParams(data);
+        } else if (data !== null && dataType === "url") {
+            const params = new URLSearchParams(data);
+            requestUrl += `?${params.toString()}`;
         }
 
         // Send the HTTP request
         const response = await fetch(
-            url,
+            requestUrl,
             {
                 method,
                 headers,
@@ -93,6 +100,7 @@ const request = async (
 };
 
 export {
+    JSONObject,
     getGlobalBearerToken, setGlobalBearerToken,
     authStorage, request,
 };

@@ -1,5 +1,6 @@
-import { request } from "./requests";
-import Logger, { Colour } from "./logger";
+import { JSONObject, request } from "./requests";
+import Logger, { Colour } from "../logger";
+import { User, validateUserArraySchema } from "./validation";
 
 const log = new Logger("api", Colour.LAUREL_GREEN);
 
@@ -13,8 +14,60 @@ if (!IS_PRODUCTION) {
 
 export default class KolomonApi {
     /*
+     * Private methods
+     */
+    /**
+     * Ensures the argument type is an array and non-null.
+     * If the requirements are not met, an Error is raised.
+     * @param object - Object (array) to check.
+     * @private
+     */
+    private static ensureTypeIsArray(object: JSONObject): any[] {
+        if (object === null || object.constructor !== Array) {
+            throw new Error(
+                `Expected array, got ${object === null ? "" : object.constructor}`,
+            );
+        }
+
+        return object;
+    }
+
+    /**
+     * Ensures the argument type is an object and non-null.
+     * If the requirements are not met, an Error is raised.
+     * @param object - Object to check.
+     * @private
+     */
+    private static ensureTypeIsObject(object: JSONObject): Record<string, any> {
+        if (object === null || object.constructor !== Object) {
+            throw new Error(
+                `Expected object, got ${object === null ? "" : object.constructor}`,
+            );
+        }
+
+        return object;
+    }
+
+    /*
      * USERS (get all, create, get self, get one, delete one, modify one)
      */
+    /**
+     * API Endpoint: GET /users/
+     * Pings the backend and returns a boolean indicating the status.
+     * @param page - Page number to request. Automatic pagination is not implemented yet.
+     */
+    static async getAllUsers(page = 0): Promise<User[]> {
+        const [_response, json] = await request(
+            constructUrl("/users/"), "GET", false,
+            { page }, "url",
+        );
+
+        if (!validateUserArraySchema(json)) {
+            throw new Error("Failed to validate User[]");
+        }
+
+        return json;
+    }
     // TODO
 
     /*
@@ -61,7 +114,7 @@ export default class KolomonApi {
      * DEFAULT (ping, check, token)
      */
     /**
-     * API Endpoint: /ping
+     * API Endpoint: GET /ping
      * Pings the backend and returns a boolean indicating the status.
      */
     static async ping(): Promise<boolean> {
@@ -69,30 +122,32 @@ export default class KolomonApi {
             constructUrl("/ping"), "GET", false,
         );
 
-        return response.ok && json !== null && json.message === "pong";
+        const validJson = this.ensureTypeIsObject(json);
+        return response.ok && validJson.message === "pong";
     }
 
     /**
-     * API Endpoint: /check
+     * API Endpoint: GET /check
      * Asks the backend to verify that the current bearer token is valid.
      */
-    static async check(): Promise<boolean> {
+    static async checkToken(): Promise<boolean> {
         const [response, json] = await request(
             constructUrl("/check"), "GET", true,
         );
 
-        return response.ok && json !== null && json.message === "You are authorized.";
+        const validJson = this.ensureTypeIsObject(json);
+        return response.ok && validJson.message === "You are authorized.";
     }
 
     /**
-     * API Endpoint: /token
+     * API Endpoint: GET /token
      * This method "logs in" the user. We get a Oauth2 bearer token that needs to be send in
      * subsequent requests inside the Authorization header.
      * NOTE: This method DOES NOT save the token, only fetches it.
      * @param username - Username to login with.
      * @param password - Password to login with.
      */
-    static async token(username: string, password: string): Promise<string | null> {
+    static async getToken(username: string, password: string): Promise<string | null> {
         const [response, json] = await request(
             constructUrl("/token"), "GET", true,
             { username, password }, "form",
@@ -104,6 +159,8 @@ export default class KolomonApi {
             );
         }
 
-        return Promise.resolve(json.access_token);
+        // TODO find a better way to do this safely
+        const validJson = this.ensureTypeIsObject(json);
+        return Promise.resolve(validJson.access_token);
     }
 }

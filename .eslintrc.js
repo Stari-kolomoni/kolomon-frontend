@@ -24,7 +24,25 @@ module.exports = {
         "react/jsx-max-props-per-line": ["warn", { maximum: 2, when: "multiline" }],
         "no-trailing-spaces": ["error", { skipBlankLines: true }],
         "react/prop-types": "off",
+        "prefer-const": ["error", { destructuring: "all" }],
         "no-multiple-empty-lines": ["error", { max: 5, maxEOF: 1}],
+        "@typescript-eslint/no-unused-vars": ["error", { ignoreRestSiblings: true, varsIgnorePattern: "^_" }],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                selector: "variable",
+                format: ["camelCase", "PascalCase", "UPPER_CASE"],
+                leadingUnderscore: "allow",
+            },
+            {
+                selector: "function",
+                format: ["camelCase", "PascalCase"],
+            },
+            {
+                selector: "typeLike",
+                format: ["PascalCase"],
+            },
+        ],
     },
     overrides: [
         {
