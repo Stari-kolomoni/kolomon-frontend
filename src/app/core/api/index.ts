@@ -4,14 +4,22 @@ import {
     Category,
     DetailResponse,
     ExtendedEnglishWord,
-    SimpleEnglishWord, Suggestion,
+    SimpleEnglishWord,
+    Suggestion,
     User,
     validateCategoryArraySchema,
     validateCategoryDeletedSchema,
-    validateCategorySchema, validateDeletedSuggestionSchema, validateEnglishWordDeletedSchema,
+    validateCategorySchema,
+    validateCheckResponseSchema,
+    validateDeletedSuggestionSchema,
+    validateEnglishWordDeletedSchema,
     validateExtendedEnglishWordSchema,
+    validatePingResponseSchema,
     validateSimpleEnglishWordArraySchema,
-    validateSimpleEnglishWordSchema, validateSuggestionArraySchema, validateSuggestionSchema,
+    validateSimpleEnglishWordSchema,
+    validateSuggestionArraySchema,
+    validateSuggestionSchema,
+    validateTokenResponseSchema,
     validateUserArraySchema,
     validateUserDeletedSchema,
     validateUserSchema,
@@ -547,54 +555,63 @@ export default class KolomonApi {
     /*
      * DEFAULT (ping, check, token)
      */
+
     /**
      * API Endpoint: GET /ping
-     * Pings the backend and returns a boolean indicating the status.
+     * Asks the backend to respond to a ping request, essentially checking for server status.
      */
     static async ping(): Promise<boolean> {
-        const [response, json] = await request(
+        const [_response, json] = await request(
             constructUrl("/ping"), "GET", false,
         );
 
-        const validJson = this.ensureTypeIsObject(json);
-        return response.ok && validJson.message === "pong";
+        if (!validatePingResponseSchema(json)) {
+            throw new Error("ping: failed to validate MessageResponse");
+        }
+
+        return json.message === "pong";
     }
 
     /**
      * API Endpoint: GET /check
-     * Asks the backend to verify that the current bearer token is valid.
+     * Verifies that the user is logged in.
      */
-    static async checkToken(): Promise<boolean> {
-        const [response, json] = await request(
+    static async checkIfProperlyLoggedIn(): Promise<boolean> {
+        const [_response, json] = await request(
             constructUrl("/check"), "GET", true,
         );
 
-        const validJson = this.ensureTypeIsObject(json);
-        return response.ok && validJson.message === "You are authorized.";
+        if (!validateCheckResponseSchema(json)) {
+            throw new Error("checkIfProperlyLoggedIn: failed to validate TokenResponse");
+        }
+
+        return json.message === "You are authorized.";
     }
 
     /**
      * API Endpoint: GET /token
-     * This method "logs in" the user. We get a Oauth2 bearer token that needs to be send in
-     * subsequent requests inside the Authorization header.
+     * Essentially logs in the user, and receives a bearer token
+     * to include in subsequent requests inside the Authorization header.
      * NOTE: This method DOES NOT save the token, only fetches it.
-     * @param username - Username to login with.
-     * @param password - Password to login with.
+     * @param username - Username to log in with.
+     * @param password - Password to log in with.
      */
-    static async getToken(username: string, password: string): Promise<string | null> {
+    static async getUserToken(
+        username: string, password: string,
+    ): Promise<string | null> {
         const [response, json] = await request(
             constructUrl("/token"), "GET", true,
             { username, password }, "form",
         );
 
-        if (!response.ok || json === null) {
-            return Promise.reject(
-                new Error(`Response: ${response.status} ${response.statusText}`),
-            );
+        if (response.status === 401) {
+            // Unauthorized
+            return null;
+        }
+        if (!validateTokenResponseSchema(json)) {
+            throw new Error("getUserToken: failed to validate TokenResponse");
         }
 
-        // TODO find a better way to do this safely
-        const validJson = this.ensureTypeIsObject(json);
-        return Promise.resolve(validJson.access_token);
+        return json.access_token;
     }
 }
