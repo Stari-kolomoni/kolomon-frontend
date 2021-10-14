@@ -4,8 +4,8 @@
  * as well as makes sure the Authorization header and similar details are followed.
  */
 
-import Logger, { Colour } from "./logger";
-import KolomonStorage from "./storage";
+import Logger, { Colour } from "../logger";
+import KolomonStorage from "../storage";
 
 const log = new Logger("requests", Colour.CAMEL);
 
@@ -21,9 +21,7 @@ if (!window.fetch) {
 /**
  * Retrieve an Oauth2 bearer token from browser storage.
  */
-const getGlobalBearerToken = (): string | null => {
-    return authStorage.get("oauth2-bearer");
-};
+const getGlobalBearerToken = (): string | null => authStorage.get("oauth2-bearer");
 
 /**
  * Set the Oauth2 bearer token. It will be saved in the browser's local storage.
@@ -82,13 +80,23 @@ const request = async (
 
         // Send the HTTP request
         const response = await fetch(
-            requestUrl,
-            {
-                method,
-                headers,
-                body: bodyData,
-            },
-        );
+                requestUrl,
+                {
+                    method,
+                    headers,
+                    body: bodyData,
+                },
+            )
+            // fetch only rejects on network errors and CORS
+            // in this case, we want to retry once again to be safe, then fail for good
+            .catch((error) => {
+                log.error(`fetch rejected: ${error}`);
+            });
+
+        if (typeof response === "undefined") {
+            // Promise rejected
+            throw new Error("Could not fetch network resource, fetch rejected.");
+        }
 
         // Decode and return the JSON as well
         const json = await response.json();
