@@ -3,7 +3,7 @@ import Logger, { Colour } from "../logger";
 import {
     Category,
     DetailResponse,
-    ExtendedEnglishWord,
+    ExtendedEnglishWord, Link,
     SimpleEnglishWord,
     Suggestion,
     User,
@@ -13,7 +13,7 @@ import {
     validateCheckResponseSchema,
     validateDeletedSuggestionSchema,
     validateEnglishWordDeletedSchema,
-    validateExtendedEnglishWordSchema,
+    validateExtendedEnglishWordSchema, validateLinkArraySchema, validateLinkSchema,
     validatePingResponseSchema,
     validateSimpleEnglishWordArraySchema,
     validateSimpleEnglishWordSchema,
@@ -402,7 +402,7 @@ export default class KolomonApi {
      * @param page - Which page to get (if there are so many to need pagination).
      * @returns An array containing suggestions.
      */
-    static async getEnglishWordTranslationSuggestions(
+    static async getAllEnglishWordTranslationSuggestions(
         wordID: number, page = 0,
     ): Promise<Suggestion[]> {
         const [_response, json] = await request(
@@ -530,7 +530,98 @@ export default class KolomonApi {
     /*
      * LINKS (get all for english word, create, get one, delete one, modify one)
      */
-    // TODO
+    /**
+     * API Endpoint: GET /lex/english/{english_id}/links/
+     * @param wordID - ID of the english word to get the links for.
+     * @param page - Which page to request.
+     * @returns An array containing links.
+     */
+    static async getAllEnglishWordLinks(wordID: number, page = 0): Promise<Link[]> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/english/${wordID}/links/`),
+            "GET", true,
+            { page }, "json",
+        );
+
+        if (!validateLinkArraySchema(json)) {
+            throw new Error("getAllEnglishWordLinks: Failed to validate Link[]");
+        }
+
+        return json;
+    }
+
+    /**
+     * API Endpoint: POST /lex/english/{english_id}/links/
+     * @param wordID - ID of the english word to get the links for.
+     * @param title - New link's title.
+     * @param url - New link's URL.
+     */
+    static async createEnglishWordLink(
+        wordID: number,
+        title: string,
+        url: string,
+    ): Promise<Link> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/english/${wordID}/links/`),
+            "POST", true,
+            { title, url }, "json",
+        );
+
+        if (!validateLinkSchema(json)) {
+            throw new Error("createEnglishWordLink: Failed to validate Link");
+        }
+
+        return json;
+    }
+
+    // TODO Add 404/... handlers to other API methods as well.
+    /**
+     * API Endpoint: GET /lex/english/{english_id}/links/{link_id}/
+     * @param wordID - ID of the english word to get the links for.
+     * @param linkID - ID of the link to get.
+     * @returns The requested link.
+     */
+    static async getEnglishWordLink(
+        wordID: number, linkID: number,
+    ): Promise<Link | null> {
+        const [response, json] = await request(
+            constructUrl(`/lex/english/${wordID}/links/${linkID}/`),
+            "GET", true,
+        );
+
+        if (response.status === 404) {
+            // English word or link does not exist
+            return null;
+        }
+
+        if (!validateLinkSchema(json)) {
+            throw new Error("getEnglishWordLink: Failed to validate Link");
+        }
+
+        return json;
+    }
+
+    /**
+     * API Endpoint: DELETE /lex/english/{english_id}/links/{link_id}/
+     * @param wordID - ID of the english word to get the links for.
+     * @param linkID - ID of the link to get.
+     */
+    static async deleteEnglishWordLink(
+        wordID: number, linkID: number,
+    ): Promise<DetailResponse> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/english/${wordID}/links/${linkID}/`),
+            "DELETE", true,
+        );
+
+        if (!validateEnglishWordDeletedSchema(json)) {
+            throw new Error("deleteEnglishWordLink: Failed to validate DetailResponse");
+        }
+
+        return json;
+    }
+
+    // TODO modify word link
 
     /*
      * RELATED (get all for english word, create, delete one)

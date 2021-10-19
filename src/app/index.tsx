@@ -11,14 +11,12 @@ import { store } from "./store";
 import KolomonApp from "./kolomon";
 
 // DEBUGONLY Developer access to the programmatic API
-if (!IS_PRODUCTION) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    import KolomonApi from "./core/api";
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    window.kolomon = KolomonApi;
-}
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import KolomonApi from "./core/api";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+window.kolomon = KolomonApi;
 
 const log = new Logger("index", Colour.BDAZZLED_BLUE);
 

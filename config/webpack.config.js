@@ -7,6 +7,7 @@ const babelConfig = require("../babel.config");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const webpackConfig = {
     mode: mainConfig.isProductionEnv ? "production" : "development",
@@ -44,10 +45,9 @@ const webpackConfig = {
         rules: [
             {
                 test: /\.s[ac]ss$/i,
-                type: "asset/resource",
                 use: [
-                    // "style-loader",
-                    // "css-loader",
+                    mainConfig.isProductionEnv ? MiniCssExtractPlugin.loader : "style-loader",
+                    "css-loader",
                     {
                         loader: "sass-loader",
                         options: {
@@ -73,6 +73,9 @@ const webpackConfig = {
     },
 
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].[hash].css"
+        }),
         new HtmlWebpackPlugin({
             template: mainConfig.src.indexHtml,
             filename: mainConfig.dist.htmlFilename,

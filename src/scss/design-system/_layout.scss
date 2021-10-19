@@ -1,0 +1,77 @@
+/**
+ * This file contains several helper classes related to CSS Grid, margins, padding, ...
+ */
+
+/*
+ * FLEX and GRID
+ */
+%flex {
+    display: flex;
+}
+
+.flex {
+    &--row {
+        @extend %flex;
+        flex-direction: row;
+    }
+
+    &--column {
+        @extend %flex;
+        flex-direction: column;
+    }
+}
+
+.flex-self {
+    &--align-start {
+        align-self: self-start;
+    }
+    &--align-end {
+        align-self: self-end;
+    }
+}
+
+/*
+ * MARGINS
+ */
+// Generate some common margins
+$padding-values: 5, 10, 15, 20, 25, 30, 40, 50;
+$margin-values: 5, 10, 15, 20, 25, 30, 40, 50;
+
+@each $padding in $padding-values {
+    // Fighting specificity :(
+    .p#{$padding}.p#{$padding} {
+        padding: $padding * 1px;
+    }
+
+    .pt#{$padding}.pt#{$padding} {
+        padding-top: $padding * 1px;
+    }
+    .pr#{$padding}.pr#{$padding} {
+        padding-right: $padding * 1px;
+    }
+    .pb#{$padding}.pb#{$padding} {
+        padding-bottom: $padding * 1px;
+    }
+    .pl#{$padding}.pl#{$padding} {
+        padding-left: $padding * 1px;
+    }
+}
+
+@each $margin in $margin-values {
+    .m#{$margin}.m#{$margin} {
+        margin: $margin * 1px;
+    }
+
+    .mt#{$margin}.mt#{$margin} {
+        margin-top: $margin * 1px;
+    }
+    .mr#{$margin}.mr#{$margin} {
+        margin-right: $margin * 1px;
+    }
+    .mb#{$margin}.mb#{$margin} {
+        margin-bottom: $margin * 1px;
+    }
+    .ml#{$margin}.ml#{$margin} {
+        margin-left: $margin * 1px;
+    }
+}

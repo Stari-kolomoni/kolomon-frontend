@@ -1,0 +1,11 @@
+@use "page-base" as base;
+
+.login-page {
+    @include base.page-base();
+
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

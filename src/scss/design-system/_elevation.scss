@@ -1,0 +1,10 @@
+/*
+ * This file includes styles for the "elevated" containers.
+ */
+
+@use "../vars" as vars;
+
+.km-elevated {
+    background-color: vars.$background-elevated;
+    border-radius: 3px;
+}

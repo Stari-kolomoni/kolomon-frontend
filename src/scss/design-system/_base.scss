@@ -2,3 +2,11 @@
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
 }
+
+html, body {
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}

@@ -1,18 +1,20 @@
-import React, { ReactNode } from "react";
+import React, { ChangeEvent, FormEvent, ReactNode } from "react";
+import { getClassNameString } from "../../core/utilities";
 
 interface FormProps {
-    children: ReactNode,
-    onSubmit?: (inputs: Record<string, any>) => void,
+    children?: ReactNode,
+    onSubmit?: (event: FormEvent<HTMLFormElement>) => void,
     className?: string,
 }
 
 const Form = ({ children, onSubmit, className }: FormProps): JSX.Element => (
-    <form onSubmit={onSubmit} className={`km-form ${className}`}>
+    <form onSubmit={onSubmit} className={getClassNameString("km-form", className)}>
         {children}
     </form>
 );
 
 Form.defaultProps = {
+    children: null,
     className: "",
     onSubmit: () => null,
 };
@@ -22,34 +24,46 @@ interface FormTextInputProps {
     label?: string,
     placeholder?: string,
     inputId: string,
+    classNameContainer?: string,
     classNameLabel?: string,
     classNameInput?: string,
+    value: string,
+    onChange: ((event: ChangeEvent<HTMLInputElement>) => void),
 }
 
 const FormTextInput = (
     {
         label, placeholder, inputId,
+        classNameContainer,
         classNameLabel, classNameInput,
+        value, onChange,
     }: FormTextInputProps,
 ): JSX.Element => (
-    <label htmlFor={inputId} className={`km-form--label ${classNameLabel}`}>
-        {label}
+    <div className={getClassNameString("km-input-label-container", classNameContainer)}>
+        <label
+            htmlFor={inputId}
+            className={getClassNameString("km-label", classNameLabel)}
+        >
+            {label}
+        </label>
         <input
-            className={`km-form--input ${classNameInput}`}
+            className={getClassNameString("km-input", classNameInput)}
             id={inputId}
+            value={value}
+            onChange={onChange}
             type="text"
             placeholder={placeholder}
         />
-    </label>
+    </div>
 );
 
 FormTextInput.defaultProps = {
     label: "",
     placeholder: "",
-    classNameLabel: "",
-    classNameInput: "",
+    classNameContainer: null,
+    classNameLabel: null,
+    classNameInput: null,
 };
-
 
 export {
     Form,

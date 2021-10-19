@@ -20,6 +20,15 @@ $font-family-primary: "Libre Baskerville", serif;
 // Based on GitHub's font stack, more information: https://css-tricks.com/snippets/css/system-font-stack/
 $font-family-secondary: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
+$font-size-h1: 9.6rem;
+$font-size-h2: 6rem;
+$font-size-h3: 4.8rem;
+$font-size-h4: 3.2rem;
+$font-size-h5: 2.4rem;
+$font-size-body-text: 1.6rem;
+$font-size-alt-body-text: 1.4rem;
+$font-size-overline: 1rem;
+
 // Headings 1 to 6
 h1 {
     font-family: $font-family-primary;
@@ -47,8 +56,9 @@ h5 {
 }
 
 // Body text
-p, span, div {
+p, span, div, input, label {
     font-family: $font-family-secondary;
+    font-size: 1.6rem;
 }
 
 // Alternative body text (slightly smaller than body text)

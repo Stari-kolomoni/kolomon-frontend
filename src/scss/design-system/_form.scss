@@ -1,9 +1,132 @@
-.km-form {
-    &--label {
+@use "../vars" as var;
+@use "./typography" as typography;
+@use "../modules/common" as c;
+@use "../modules/animations" as anim;
 
+// This is the <form> element
+.km-form {
+    margin: 14px 8px;
+    padding: 12px 8px;
+}
+
+// This is a div that contains both .km-label and .km-input
+.km-input-label-container {
+    @include c.flex-column-center();
+}
+
+// This is the label before a .km-input
+.km-label {
+    align-self: self-start;
+    font-family: typography.$font-family-secondary;
+    font-size: typography.$font-size-body-text;
+    font-weight: 600;
+    margin-left: 4px;
+    margin-bottom: 2px;
+}
+
+// This is a text/... input box
+.km-input {
+    padding: 6px 9px;
+    margin: 8px 0 16px 0;
+    border: 1px solid var.$black;
+    border-radius: 2px;
+}
+
+.km-label + .km-input {
+    margin-top: 0;
+}
+
+// This is an individual button
+%km-button {
+    position: relative;
+    border-radius: 2px;
+    padding: 12px 16px;
+    font-family: typography.$font-family-secondary;
+    font-size: typography.$font-size-body-text;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        border none,
+        background-color .15s anim.$ease-in-out-circ;
+}
+
+// Button configuration
+$button-focus-outline: 4px;
+
+// Default button
+$button-default-hover-background: darken(var.$button-default-background, 5%);
+
+// These values are calculated automatically
+$button-focus-border-width: $button-focus-outline / 2;
+$button-focus-outer-offset: -1 * $button-focus-outline;
+
+// This mixin will generate a set of css rules that will make the button react to being focused
+@mixin button-focus-style(
+    $background,
+    $hover-background,
+    $focus-outer-ring-background: $background,
+    $focus-inner-ring-background: var.$body-text-white,
+) {
+    border: $button-focus-border-width solid $background;
+
+    &:hover {
+        border-color: $hover-background;
     }
 
-    &--input {
+    &:focus {
+        border-color: $focus-inner-ring-background;
 
+        &:after {
+            content: "";
+            position: absolute;
+            width: calc(100% + #{$button-focus-outline});
+            height: calc(100% + #{$button-focus-outline});
+            top: $button-focus-outer-offset;
+            left: $button-focus-outer-offset;
+            border: $button-focus-border-width solid $focus-outer-ring-background;
+        }
+    }
+}
+
+.km-button {
+    // (default)
+    @include button-focus-style(var.$button-default-background, $button-default-hover-background);
+    @extend %km-button;
+
+    color: var.$body-text;
+    background-color: var.$button-default-background;
+
+    &:hover {
+        background-color: $button-default-hover-background;
+    }
+
+
+    &--alt {
+        // (alt)
+        @extend %km-button;
+
+        color: var.$body-text-white;
+        background-color: var.$button-alt-background;
+        border: none;
+    }
+
+
+    &--primary {
+        // (primary)
+        @extend %km-button;
+
+        color: var.$body-text-white;
+        background-color: var.$button-primary-background;
+        border: none;
+    }
+
+
+    &--secondary {
+        // (secondary)
+        @extend %km-button;
+
+        color: var.$body-text-white;
+        background-color: var.$button-secondary-background;
+        border: none;
     }
 }

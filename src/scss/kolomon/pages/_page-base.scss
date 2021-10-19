@@ -1,0 +1,5 @@
+@use "../../vars" as vars;
+
+@mixin page-base {
+    background-color: vars.$background-primary;
+}
