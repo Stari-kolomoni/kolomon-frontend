@@ -5,6 +5,7 @@ import KolomonApi from "../../core/api";
 import { setGlobalBearerToken } from "../../core/api/requests";
 import { Button } from "../components/button";
 import { Elevation } from "../components/elevation";
+import { H1 } from "../components/text";
 
 const log = new Logger("login", Colour.DARK_PURPLE);
 
@@ -57,7 +58,9 @@ class Login extends Component<LoginProps, LoginState> {
 
         return (
             <div className="login-page">
-                <Elevation className="pt15 pb10 pl25 pr25">
+                <H1 content="Kolomon" className="kolomon-title" />
+
+                <Elevation className="pt20 pb10 pl30 pr30">
                     <Form onSubmit={this.handleSubmit} className="flex--column">
                         <FormTextInput
                             inputId="login-page-username"
@@ -74,7 +77,7 @@ class Login extends Component<LoginProps, LoginState> {
                         <Button
                             type="submit"
                             content="Prijava"
-                            className="flex-self--align-end"
+                            className="flex-self--align-center mt15 pl25 pr25"
                         />
                     </Form>
                 </Elevation>

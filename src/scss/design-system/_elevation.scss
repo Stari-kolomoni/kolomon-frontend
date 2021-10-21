@@ -7,4 +7,5 @@
 .km-elevated {
     background-color: vars.$background-elevated;
     border-radius: 3px;
+    box-shadow: 1px 2px 3px transparentize(vars.$body-text, 0.7);
 }

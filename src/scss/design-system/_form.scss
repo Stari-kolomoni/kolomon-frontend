@@ -5,8 +5,8 @@
 
 // This is the <form> element
 .km-form {
-    margin: 14px 8px;
-    padding: 12px 8px;
+    margin: 12px 0;
+    padding: 8px;
 }
 
 // This is a div that contains both .km-label and .km-input
@@ -18,115 +18,45 @@
 .km-label {
     align-self: self-start;
     font-family: typography.$font-family-secondary;
-    font-size: typography.$font-size-body-text;
+    font-size: typography.$font-size-alt-text;
+    color: lighten(var.$body-text, 6%);
+    letter-spacing: .1px;
     font-weight: 600;
     margin-left: 4px;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    transition: color .1s ease-out;
 }
 
-// This is a text/... input box
+// Darken the label when input is focused
+.km-input-label-container:focus-within .km-label {
+    color: var.$black;
+}
+
+// This is a text/email/... input box
 .km-input {
+    position: relative;
     padding: 6px 9px;
     margin: 8px 0 16px 0;
     border: 1px solid var.$black;
     border-radius: 2px;
-}
-
-.km-label + .km-input {
-    margin-top: 0;
-}
-
-// This is an individual button
-%km-button {
-    position: relative;
-    border-radius: 2px;
-    padding: 12px 16px;
-    font-family: typography.$font-family-secondary;
-    font-size: typography.$font-size-body-text;
-    font-weight: bold;
-    cursor: pointer;
-    transition:
-        border none,
-        background-color .15s anim.$ease-in-out-circ;
-}
-
-// Button configuration
-$button-focus-outline: 4px;
-
-// Default button
-$button-default-hover-background: darken(var.$button-default-background, 5%);
-
-// These values are calculated automatically
-$button-focus-border-width: $button-focus-outline / 2;
-$button-focus-outer-offset: -1 * $button-focus-outline;
-
-// This mixin will generate a set of css rules that will make the button react to being focused
-@mixin button-focus-style(
-    $background,
-    $hover-background,
-    $focus-outer-ring-background: $background,
-    $focus-inner-ring-background: var.$body-text-white,
-) {
-    border: $button-focus-border-width solid $background;
-
-    &:hover {
-        border-color: $hover-background;
-    }
+    box-shadow:
+        1px 1px 1px transparentize(var.$body-text, 0.75),
+        inset 1px 1px transparentize(var.$body-text, 0.9);
 
     &:focus {
-        border-color: $focus-inner-ring-background;
+        outline: 2px solid var.$secondary-dark;
+        outline-offset: -1px;
+    }
 
-        &:after {
-            content: "";
-            position: absolute;
-            width: calc(100% + #{$button-focus-outline});
-            height: calc(100% + #{$button-focus-outline});
-            top: $button-focus-outer-offset;
-            left: $button-focus-outer-offset;
-            border: $button-focus-border-width solid $focus-outer-ring-background;
-        }
+    &:focus:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 
-.km-button {
-    // (default)
-    @include button-focus-style(var.$button-default-background, $button-default-hover-background);
-    @extend %km-button;
-
-    color: var.$body-text;
-    background-color: var.$button-default-background;
-
-    &:hover {
-        background-color: $button-default-hover-background;
-    }
-
-
-    &--alt {
-        // (alt)
-        @extend %km-button;
-
-        color: var.$body-text-white;
-        background-color: var.$button-alt-background;
-        border: none;
-    }
-
-
-    &--primary {
-        // (primary)
-        @extend %km-button;
-
-        color: var.$body-text-white;
-        background-color: var.$button-primary-background;
-        border: none;
-    }
-
-
-    &--secondary {
-        // (secondary)
-        @extend %km-button;
-
-        color: var.$body-text-white;
-        background-color: var.$button-secondary-background;
-        border: none;
-    }
+// Make sure to disable margins on the input box when it has a label before it
+.km-label + .km-input {
+    margin-top: 0;
 }
