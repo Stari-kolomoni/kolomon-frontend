@@ -680,7 +680,7 @@ export default class KolomonApi {
     }
 
     /**
-     * API Endpoint: GET /token
+     * API Endpoint: POST /token
      * Essentially logs in the user, and receives a bearer token
      * to include in subsequent requests inside the Authorization header.
      * NOTE: This method DOES NOT save the token, only fetches it.
@@ -691,7 +691,7 @@ export default class KolomonApi {
         username: string, password: string,
     ): Promise<string | null> {
         const [response, json] = await request(
-            constructUrl("/token"), "GET", true,
+            constructUrl("/token"), "POST", true,
             { username, password }, "form",
         );
 

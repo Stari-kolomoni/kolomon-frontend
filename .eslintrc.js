@@ -17,6 +17,7 @@ module.exports = {
         "quotes": ["error", "double"],
         "max-len": ["warn", { comments: 120, code: 90 }],
         "no-trailing-spaces": ["error", { skipBlankLines: true }],
+        "no-param-reassign": "off",
         "prefer-const": ["error", { destructuring: "all" }],
         "no-multiple-empty-lines": ["error", { max: 5, maxEOF: 1}],
         "react/jsx-indent": ["error", 4],

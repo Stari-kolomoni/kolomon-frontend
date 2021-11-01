@@ -22,8 +22,8 @@
     color: lighten(var.$body-text, 6%);
     letter-spacing: .1px;
     font-weight: 600;
-    margin-left: 4px;
-    margin-bottom: 6px;
+    margin-left: 2px;
+    margin-bottom: 2px;
     transition: color .1s ease-out;
 }
 
@@ -34,6 +34,7 @@
 
 // This is a text/email/... input box
 .km-input {
+    display: inline-block;
     position: relative;
     padding: 6px 9px;
     margin: 8px 0 16px 0;
