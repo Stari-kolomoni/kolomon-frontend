@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, MouseEvent } from "react";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import Logger, { Colour } from "../../core/logger";
 import KolomonApi from "../../core/api";
 import { setGlobalBearerToken } from "../../core/api/requests";
@@ -9,13 +9,24 @@ import { Button } from "../components/button";
 import { Form, FormTextInput } from "../components/form";
 import { Elevation } from "../components/elevation";
 import { H1 } from "../components/text";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { useAppDispatch } from "../../hooks";
 import { logIn } from "./loginSlice";
 
 const log = new Logger("login", Colour.DARK_PURPLE);
 
-interface LoginProps {
+const mapState = (state: RootState) => ({
+
+});
+const mapDispatch = {
+
+};
+
+const connector = connect(mapState, );
+
+type LoginPropsFromRedux = ConnectedProps<typeof connector>;
+
+interface LoginProps extends LoginPropsFromRedux {
     dispatch: AppDispatch,
 }
 
@@ -102,4 +113,4 @@ class Login extends Component<LoginProps, LoginState> {
     }
 }
 
-export default connect()(Login);
+export default connector(Login);

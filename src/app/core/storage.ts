@@ -56,4 +56,12 @@ export default class KolomonStorage {
     set(key: string, value: string): void {
         this.storageApi.setItem(this.mergeKeyWithPrefix(key), value);
     }
+
+    /**
+     * Check whether there is a non-null value at the specified key.
+     * @param key - Key to check.
+     */
+    exists(key: string): boolean {
+        return this.storageApi.getItem(this.mergeKeyWithPrefix(key)) !== null;
+    }
 }

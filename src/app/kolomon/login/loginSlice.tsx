@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import KolomonStorage from "../../core/storage";
 
 export interface LoginState {
     loginState: "LOGGED_OUT" | "LOGGED_IN",
@@ -9,7 +10,6 @@ export interface LoginState {
 }
 
 const initialLoginState: LoginState = {
-    // TODO check if already logged in on startup (check local storage)
     loginState: "LOGGED_OUT",
 };
 
@@ -26,6 +26,9 @@ export const loginSlice = createSlice({
     },
 });
 
+// All actions as one object
+export const { actions } = loginSlice;
+// Destructured actions
 export const { logIn } = loginSlice.actions;
 
 export default loginSlice.reducer;
