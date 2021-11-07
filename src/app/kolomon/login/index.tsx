@@ -12,6 +12,8 @@ import { H1 } from "../components/text";
 import { AppDispatch, RootState } from "../../store";
 import { useAppDispatch } from "../../hooks";
 import { logIn } from "./loginSlice";
+import produce from "immer";
+import { Navigate } from "react-router-dom";
 
 const log = new Logger("login", Colour.DARK_PURPLE);
 
@@ -33,6 +35,7 @@ interface LoginProps extends LoginPropsFromRedux {
 interface LoginState {
     username: string,
     password: string,
+    performRedirectToHome: boolean,
 }
 
 class Login extends Component<LoginProps, LoginState> {
@@ -41,6 +44,7 @@ class Login extends Component<LoginProps, LoginState> {
         this.state = {
             username: "",
             password: "",
+            performRedirectToHome: false,
         };
     }
 
@@ -77,10 +81,23 @@ class Login extends Component<LoginProps, LoginState> {
 
         dispatch(logIn({ username }));
         log.info(`Logged in as ${username}.`);
+
+        log.info("Redirecting to /home");
+        this.setState(
+            produce((previousState) => {
+                previousState.performRedirectToHome = true;
+            }),
+        );
     };
 
     render(): JSX.Element {
-        const { username, password } = this.state;
+        const { username, password, performRedirectToHome } = this.state;
+
+        if (performRedirectToHome) {
+            return (
+                <Navigate to="/home" />
+            );
+        }
 
         return (
             <div className="login-page">
