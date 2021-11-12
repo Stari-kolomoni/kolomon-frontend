@@ -7,10 +7,9 @@ import { setGlobalBearerToken } from "../../core/api/requests";
 
 import { Button } from "../components/button";
 import { Form, FormTextInput } from "../components/form";
-import { Elevation } from "../components/elevation";
+import { ElevatedContainer } from "../components/container";
 import { H1 } from "../components/text";
 import { AppDispatch, RootState } from "../../store";
-import { useAppDispatch } from "../../hooks";
 import { logIn } from "./loginSlice";
 import produce from "immer";
 import { Navigate } from "react-router-dom";
@@ -24,7 +23,7 @@ const mapDispatch = {
 
 };
 
-const connector = connect(mapState, );
+const connector = connect(mapState, mapDispatch);
 
 type LoginPropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -79,7 +78,9 @@ class Login extends Component<LoginProps, LoginState> {
             return;
         }
 
-        dispatch(logIn({ username }));
+        const { id } = await KolomonApi.getLoggedInUser();
+
+        dispatch(logIn({ id, username }));
         log.info(`Logged in as ${username}.`);
 
         log.info("Redirecting to /home");
@@ -103,16 +104,16 @@ class Login extends Component<LoginProps, LoginState> {
             <div className="login-page">
                 <H1 content="Kolomon" className="kolomon-title" />
 
-                <Elevation className="pt20 pb10 pl30 pr30">
+                <ElevatedContainer className="pt20 pb10 pl30 pr30">
                     <Form className="flex--column">
                         <FormTextInput
-                            inputId="login-page-username"
+                            id="login-page-username"
                             label="Uporabniško ime"
                             value={username}
                             onChange={this.handleUsernameChange}
                         />
                         <FormTextInput
-                            inputId="login-page-password"
+                            id="login-page-password"
                             label="Geslo"
                             value={password}
                             onChange={this.handlePasswordChange}
@@ -124,7 +125,7 @@ class Login extends Component<LoginProps, LoginState> {
                             onClick={this.handleSubmit}
                         />
                     </Form>
-                </Elevation>
+                </ElevatedContainer>
             </div>
         );
     }

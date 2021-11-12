@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import KolomonStorage from "../../core/storage";
+
+export interface LoggedInUser {
+    id: number,
+    username: string,
+}
 
 export interface LoginState {
     loginState: "LOGGED_OUT" | "LOGGED_IN",
-    user?: {
-        username: string,
-        // TODO any other user info we need
-    },
+    user?: LoggedInUser,
 }
 
 const initialLoginState: LoginState = {
@@ -17,9 +18,10 @@ export const loginSlice = createSlice({
     name: "login",
     initialState: initialLoginState,
     reducers: {
-        logIn: (state, action: PayloadAction<{ username: string }>) => {
+        logIn: (state, action: PayloadAction<LoggedInUser>) => {
             state.loginState = "LOGGED_IN";
             state.user = {
+                id: action.payload.id,
                 username: action.payload.username,
             };
         },
