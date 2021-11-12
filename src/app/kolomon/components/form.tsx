@@ -23,7 +23,7 @@ Form.defaultProps = {
 interface FormTextInputProps {
     label?: string,
     placeholder?: string,
-    inputId: string,
+    id: string,
     classNameContainer?: string,
     classNameLabel?: string,
     classNameInput?: string,
@@ -33,7 +33,7 @@ interface FormTextInputProps {
 
 const FormTextInput = (
     {
-        label, placeholder, inputId,
+        label, placeholder, id,
         classNameContainer,
         classNameLabel, classNameInput,
         value, onChange,
@@ -41,14 +41,14 @@ const FormTextInput = (
 ): JSX.Element => (
     <div className={getClassNameString("km-input-label-container", classNameContainer)}>
         <label
-            htmlFor={inputId}
+            htmlFor={id}
             className={getClassNameString("km-label", classNameLabel)}
         >
             {label}
         </label>
         <input
             className={getClassNameString("km-input", classNameInput)}
-            id={inputId}
+            id={id}
             value={value}
             onChange={onChange}
             type="text"
@@ -65,7 +65,37 @@ FormTextInput.defaultProps = {
     classNameInput: null,
 };
 
+interface FormTextInputNoLabelProps {
+    placeholder?: string,
+    id: string,
+    classNameInput?: string,
+    value: string,
+    onChange: ((event: ChangeEvent<HTMLInputElement>) => void),
+}
+
+const FormTextInputNoLabel = (
+    {
+        placeholder, onChange, id,
+        value, classNameInput,
+    }: FormTextInputNoLabelProps,
+): JSX.Element => (
+    <input
+        className={getClassNameString("km-input", classNameInput)}
+        id={id}
+        value={value}
+        onChange={onChange}
+        type="text"
+        placeholder={placeholder}
+    />
+);
+
+FormTextInputNoLabel.defaultProps = {
+    placeholder: "",
+    classNameInput: "",
+};
+
 export {
     Form,
     FormTextInput,
+    FormTextInputNoLabel,
 };
