@@ -8,7 +8,7 @@ export const getClassNameString = (...params: (string | null | undefined)[]): st
 
     params.forEach((item) => {
         // Ignore null values
-        if (item !== null && typeof item !== "undefined") {
+        if (item !== null && typeof item !== "undefined" && item !== "") {
             if (item.indexOf(" ") !== -1) {
                 // String has space, split by space and add each element individually
                 const items = item.split(" ").filter((c) => c !== "");
