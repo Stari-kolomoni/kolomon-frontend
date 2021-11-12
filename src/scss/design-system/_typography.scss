@@ -1,8 +1,8 @@
 /*
  * Kolomon Design System: Typography
- *
- * This file contains styles for setting fonts, their sizes, colour and similar styles.
+ * This partial contains styles for setting fonts, their sizes, colour and similar styles.
  */
+
 @use "../vars" as vars;
 
 html {
@@ -75,3 +75,17 @@ p, span, div, input, label {
 
 // Overline (all-caps small text)
 // TODO refer to the designs
+
+
+// Common font classes
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}

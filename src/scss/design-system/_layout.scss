@@ -1,10 +1,10 @@
-/**
- * This file contains several helper classes related to CSS Grid, margins, padding, ...
+/*
+ * Kolomon Design System: base
+ * This partial contains several helper classes related to CSS Grid, margins, padding, ...
  */
 
-/*
- * FLEX and GRID
- */
+
+// Flex and grid
 %flex {
     display: flex;
 }
@@ -33,12 +33,9 @@
     }
 }
 
-/*
- * MARGINS
- */
 // Generate some common margins
-$padding-values: 5, 10, 15, 20, 25, 30, 40, 50;
-$margin-values: 5, 10, 15, 20, 25, 30, 40, 50;
+$padding-values: 10, 15, 20, 25, 30, 40, 50;
+$margin-values: 10, 15, 20, 25, 30, 40, 50;
 
 @each $padding in $padding-values {
     // Fighting specificity :(

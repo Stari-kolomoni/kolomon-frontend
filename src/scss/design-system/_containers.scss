@@ -1,0 +1,33 @@
+/*
+ * Kolomon Design System: base
+ * This partial contains the container system.
+ */
+
+@use "../vars" as vars;
+@use "../modules/common" as common;
+
+@mixin container-padding($top: 6px, $side: 10px) {
+    padding: $top $side;
+}
+
+// First container type: just a normal container with minimal padding
+.km-container {
+    @include container-padding();
+
+    &--narrow {
+        @include container-padding(12px, 18px);
+    }
+}
+
+// Second container type: an "elevated" container (lighter background colour, slightly rounded)
+.km-elevated {
+    @include container-padding();
+    background-color: vars.$background-elevated;
+    border-radius: 3px;
+    box-shadow: 1px 2px 3px transparentize(vars.$body-text, 0.7);
+}
+
+// Third utility container type: a full-width flex container that vertically centers all children
+.km-centering-container {
+    @include common.flex-column-center(false, true);
+}

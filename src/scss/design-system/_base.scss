@@ -1,3 +1,9 @@
+/*
+ * Kolomon Design System: base
+ * This partial contains just the very base styles for the app.
+ */
+@use "../vars" as vars;
+
 * {
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
@@ -6,6 +12,10 @@
 html, body {
     height: 100%;
     line-height: 1.6;
+}
+
+body {
+    background-color: vars.$background-primary;
 }
 
 #root {
