@@ -2,8 +2,11 @@ import React, { ChangeEvent, Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { H2 } from "../components/text";
 import { RootState } from "../../store";
-import { Form, FormTextInputNoLabel } from "../components/form";
+import { FormTextInputNoLabel } from "../components/form";
 import { CenteringContainer, Container } from "../components/container";
+
+import PlusSVG from "../../../assets/plus.svg";
+import { Button } from "../components/button";
 
 interface MainSearchBarProps {}
 
@@ -28,11 +31,17 @@ class MainSearchBar extends Component<MainSearchBarProps, MainSearchBarState> {
         const { searchTerm } = this.state;
 
         return (
-            <FormTextInputNoLabel
-                value={searchTerm}
-                onChange={this.handleSearchTermChange}
-                id="mainsearchbar"
-            />
+            <div id="main-search-bar">
+                <FormTextInputNoLabel
+                    value={searchTerm}
+                    onChange={this.handleSearchTermChange}
+                    id="main-search-bar-input"
+                />
+                <div
+                    id="main-search-bar-add-btn"
+                    dangerouslySetInnerHTML={{ __html: PlusSVG }}
+                />
+            </div>
         );
     }
 }
@@ -59,12 +68,14 @@ class Home extends Component<HomeProps, HomeState> {
         const username = user ? user.username.replace(/^\w/, (c) => c.toUpperCase()) : "";
 
         return (
-            <Container containerType="narrow">
-                <H2 content={`Pozdravljen, ${username}`} className="text-center" />
-                <CenteringContainer>
-                    <MainSearchBar />
-                </CenteringContainer>
-            </Container>
+            <div className="home-page">
+                <Container containerType="narrow">
+                    <H2 content={`Pozdravljen, ${username}`} className="text-center" />
+                    <CenteringContainer>
+                        <MainSearchBar />
+                    </CenteringContainer>
+                </Container>
+            </div>
         );
     }
 }

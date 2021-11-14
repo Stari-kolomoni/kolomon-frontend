@@ -44,6 +44,10 @@ const webpackConfig = {
     module: {
         rules: [
             {
+                test: /\.svg/i,
+                use: "raw-loader",
+            },
+            {
                 test: /\.s[ac]ss$/i,
                 use: [
                     mainConfig.isProductionEnv ? MiniCssExtractPlugin.loader : "style-loader",

@@ -29,5 +29,5 @@
 
 // Third utility container type: a full-width flex container that vertically centers all children
 .km-centering-container {
-    @include common.flex-column-center(false, true);
+    @include common.flex-column-center(true, false);
 }

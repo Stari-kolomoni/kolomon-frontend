@@ -1,0 +1,52 @@
+@use "page-base" as base;
+@use "../../modules/common" as common;
+@use "../../vars" as vars;
+
+.home-page {
+    @include base.page-base();
+
+    #main-search-bar {
+        @include common.flex-row-center(true, true);
+    }
+
+    #main-search-bar-input {
+        display: inline-block;
+        height: 4rem;
+        width: 54rem;
+        margin: 8px 0;
+
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+
+        z-index: 40;
+    }
+
+    #main-search-bar-add-btn {
+        display: inline-block;
+        position: relative;
+        height: 4rem;
+        width: 4rem;
+        background-color: vars.$button-default-background;
+        padding: 0;
+        cursor: pointer;
+        z-index: 30;
+
+        // Same border and box-shadow as the input
+        border: 1px solid vars.$black;
+        border-left: none;
+        box-shadow:
+            1px 1px 1px transparentize(vars.$body-text, 0.75),
+            inset 1px 1px transparentize(vars.$body-text, 0.9);
+
+        // Recolor the plus icon stroke
+        svg {
+            height: 2.8rem;
+            width: 2.8rem;
+            margin: 0.6rem;
+
+            path {
+                stroke: vars.$black !important;
+            }
+        }
+    }
+}

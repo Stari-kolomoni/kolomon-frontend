@@ -5,11 +5,12 @@ interface ButtonProps {
     content: string,
     type: "submit" | "reset" | "button",
     className?: string,
+    id?: string,
     onClick?: MouseEventHandler<HTMLButtonElement>,
 }
 
 const Button = ({
-    content, type, className, onClick,
+    content, type, className, onClick, id,
 }: ButtonProps): JSX.Element => (
     <button
         // Disabled because TypeScript checks the type for us
@@ -18,6 +19,7 @@ const Button = ({
         type={type}
         className={getClassNameString("km-button", className)}
         onClick={onClick}
+        id={id}
     >
         {content}
     </button>
@@ -26,6 +28,7 @@ const Button = ({
 Button.defaultProps = {
     className: null,
     onClick: null,
+    id: null,
 };
 
 export {
