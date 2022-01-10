@@ -18,6 +18,7 @@ const webpackConfig = {
     output: {
         path: baseConfig.distDirectory,
         filename: mainConfig.dist.bundleFilename,
+        publicPath: "/"
     },
 
     target: "browserslist",

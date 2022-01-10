@@ -167,13 +167,13 @@ export interface ExtendedEnglishWord {
     word: string,
     description: string,
     id: number,
-    translation_state: number,
+    translation_state?: number,
     // Time is in the UTC format, see User for comment on time validation
     created_at: string,
     edited_at: string,
-    translation_comment: string,
-    edited_by_id: number,
-    edited_by_name: string,
+    translation_comment?: string,
+    edited_by_id?: number,
+    edited_by_name?: string,
     categories: Category[],
 }
 const extendedEnglishWordSchema: JSONSchemaType<ExtendedEnglishWord> = {
@@ -182,21 +182,20 @@ const extendedEnglishWordSchema: JSONSchemaType<ExtendedEnglishWord> = {
         word: { type: "string" },
         description: { type: "string" },
         id: { type: "number" },
-        translation_state: { type: "number" },
+        translation_state: { type: "number", nullable: true },
         // Time is in the UTC format, see User for comment on time validation
         created_at: { type: "string" },
         edited_at: { type: "string" },
-        translation_comment: { type: "string" },
-        edited_by_id: { type: "number" },
-        edited_by_name: { type: "string" },
+        translation_comment: { type: "string", nullable: true },
+        edited_by_id: { type: "number", nullable: true },
+        edited_by_name: { type: "string", nullable: true },
         categories: {
             ...categoryArraySchema,
         },
     },
     required: [
         "word", "description", "id",
-        "translation_state", "created_at", "edited_at",
-        "translation_comment", "edited_by_id", "edited_by_name",
+        "created_at", "edited_at",
         "categories",
     ],
 };

@@ -11,6 +11,7 @@ import KolomonApi from "../core/api";
 import Login from "./login";
 import Home from "./home";
 import { logIn } from "./login/loginSlice";
+import WordDisplay from "./wordDisplay";
 
 const log = new Logger("kolomonapp", Colour.BITTER_LIME);
 
@@ -94,6 +95,7 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
                             : <Navigate to="/home" />
                     }
                 />
+                <Route path="/english/:wordId" element={<WordDisplay />} />
             </Routes>
         );
     }
