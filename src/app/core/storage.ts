@@ -64,4 +64,17 @@ export default class KolomonStorage {
     exists(key: string): boolean {
         return this.storageApi.getItem(this.mergeKeyWithPrefix(key)) !== null;
     }
+
+    /**
+     * If a key exists in the storage, deletes it and returns true.
+     * @param key - Key to delete.
+     */
+    delete(key: string): boolean {
+        if (this.exists(key)) {
+            this.storageApi.removeItem(key);
+            return true;
+        }
+
+        return false;
+    }
 }

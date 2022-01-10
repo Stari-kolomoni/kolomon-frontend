@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
-import Login from "./login";
-import Home from "./home";
+import produce from "immer";
+
 import { RootState } from "../store";
-import { logIn } from "./login/loginSlice";
 import KolomonStorage from "../core/storage";
 import Logger, { Colour } from "../core/logger";
 import KolomonApi from "../core/api";
-import produce from "immer";
+
+import Login from "./login";
+import Home from "./home";
+import { logIn } from "./login/loginSlice";
 
 const log = new Logger("kolomonapp", Colour.BITTER_LIME);
 
@@ -17,7 +19,7 @@ const mapState = (state: RootState) => ({
     loginState: state.login.loginState,
 });
 const mapDispatch = {
-    logIn,
+    dispatchLogIn: logIn,
 };
 const connector = connect(mapState, mapDispatch);
 type KolomonAppPropsFromRedux = ConnectedProps<typeof connector>;
@@ -43,7 +45,7 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
     }
 
     checkLoginStatus = async () => {
-        const { logIn: dispatchLogIn } = this.props;
+        const { dispatchLogIn } = this.props;
 
         // Check whether the user is already logged in
         const authStorage = new KolomonStorage("local", "auth");
@@ -55,9 +57,10 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
             if (loggedIn) {
                 const userInfo = await KolomonApi.getLoggedInUser();
                 log.info(`Valid login: ${userInfo.username}`);
-                dispatchLogIn({ username: userInfo.username });
+                dispatchLogIn(userInfo);
             } else {
                 log.info("Invalid token, user will have to log in again.");
+                authStorage.delete("oauth2-bearer");
             }
         }
 

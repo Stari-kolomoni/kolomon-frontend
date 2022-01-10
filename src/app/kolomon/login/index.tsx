@@ -1,6 +1,9 @@
 import React, { ChangeEvent, Component, MouseEvent } from "react";
-
 import { connect, ConnectedProps } from "react-redux";
+import produce from "immer";
+import { Navigate } from "react-router-dom";
+
+import { RootState } from "../../store";
 import Logger, { Colour } from "../../core/logger";
 import KolomonApi from "../../core/api";
 import { setGlobalBearerToken } from "../../core/api/requests";
@@ -9,27 +12,21 @@ import { Button } from "../components/button";
 import { Form, FormTextInput } from "../components/form";
 import { ElevatedContainer } from "../components/container";
 import { H1 } from "../components/text";
-import { AppDispatch, RootState } from "../../store";
-import { logIn } from "./loginSlice";
-import produce from "immer";
-import { Navigate } from "react-router-dom";
+import { logIn, LoginState as LoginSliceState } from "./loginSlice";
 
 const log = new Logger("login", Colour.DARK_PURPLE);
 
 const mapState = (state: RootState) => ({
-
+    isLoggedIn: state.login.loginState,
+    loggedInUser: state.login.user,
 });
 const mapDispatch = {
-
+    dispatchLogIn: logIn,
 };
-
 const connector = connect(mapState, mapDispatch);
-
 type LoginPropsFromRedux = ConnectedProps<typeof connector>;
 
-interface LoginProps extends LoginPropsFromRedux {
-    dispatch: AppDispatch,
-}
+interface LoginProps extends LoginPropsFromRedux {}
 
 interface LoginState {
     username: string,
@@ -58,7 +55,7 @@ class Login extends Component<LoginProps, LoginState> {
     handleSubmit = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
         event.preventDefault();
         const { username, password } = this.state;
-        const { dispatch } = this.props;
+        const { dispatchLogIn } = this.props;
 
         log.info(`Logging in as ${username}.`);
         const token = await KolomonApi.getUserToken(username, password);
@@ -78,10 +75,10 @@ class Login extends Component<LoginProps, LoginState> {
             return;
         }
 
-        const { id } = await KolomonApi.getLoggedInUser();
+        const loggedInUser = await KolomonApi.getLoggedInUser();
 
-        dispatch(logIn({ id, username }));
-        log.info(`Logged in as ${username}.`);
+        dispatchLogIn(loggedInUser);
+        log.info(`Logged in as ${loggedInUser.username}.`);
 
         log.info("Redirecting to /home");
         this.setState(
@@ -93,8 +90,9 @@ class Login extends Component<LoginProps, LoginState> {
 
     render(): JSX.Element {
         const { username, password, performRedirectToHome } = this.state;
+        const { isLoggedIn } = this.props;
 
-        if (performRedirectToHome) {
+        if (performRedirectToHome || isLoggedIn === LoginSliceState.LOGGED_IN) {
             return (
                 <Navigate to="/home" />
             );
