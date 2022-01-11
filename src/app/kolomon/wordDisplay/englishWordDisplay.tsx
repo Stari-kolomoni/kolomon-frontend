@@ -17,9 +17,17 @@ class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
         const { word } = this.props;
 
         return (
-            <span>
-                English word: {word.word}
-            </span>
+            <div className="word word--english">
+                <div className="word-name">{word.word}</div>
+                <div className="word-description">{word.description}</div>
+                <div className="word-suggestions">Predlogi</div>
+                <div className="word-related">Povezano</div>
+                <div className="word-links">Povezave & viri</div>
+                <div className="word-state">Stanje</div>
+                <div className="word-last-edit">
+                    Nazadnje urejeno: {word.edited_at.toString()}
+                </div>
+            </div>
         );
     }
 }

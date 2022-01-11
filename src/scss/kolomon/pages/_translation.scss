@@ -1,0 +1,68 @@
+@use "../../design-system/typography" as typography;
+
+.page-translation .content {
+    margin-top: 40px;
+}
+
+.word {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 14% 26% 20% 20% 15%;
+
+    min-width: 700px;
+    min-height: 400px;
+    margin: 10px;
+}
+
+.word--english {
+    // First column
+    .word-name {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+
+        font-family: typography.$font-family-primary;
+        font-size: typography.$font-size-h3;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .word-description {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+
+        font-family: typography.$font-family-secondary;
+        font-size: typography.$font-size-body-text;
+        font-weight: 500;
+    }
+
+    // TODO
+
+    .word-suggestions {
+        grid-column: 1 / span 1;
+        grid-row: 3 / span 1;
+    }
+
+    .word-related {
+        grid-column: 1 / span 1;
+        grid-row: 4 / span 1;
+    }
+
+    // Second column
+    .word-links {
+        grid-column: 2 / span 1;
+        grid-row: 2 / span 1;
+    }
+
+    .word-state {
+        grid-column: 2 / span 1;
+        grid-row: 3 / span 1;
+    }
+
+    .word-last-edit {
+        grid-column: 2 / span 1;
+        grid-row: 5 / span 1;
+    }
+}
+
+.word--slovene {
+}

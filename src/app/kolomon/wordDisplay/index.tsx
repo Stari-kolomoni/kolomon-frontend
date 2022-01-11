@@ -9,6 +9,7 @@ import KolomonApi from "../../core/api";
 import { setEnglishWord, setSloveneWord } from "./wordDisplaySlice";
 import Logger, { Colour } from "../../core/logger";
 import BaseScreen from "../screens/baseScreen";
+import { CenteringContainer } from "../components/container";
 
 const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 
@@ -72,9 +73,11 @@ class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
         return (
             <BaseScreen className="page-translation" showHeader>
                 <span>
-                    {
-                        englishWord ? <EnglishWordDisplay word={englishWord} /> : null
-                    }
+                    <CenteringContainer>
+                        {
+                            englishWord ? <EnglishWordDisplay word={englishWord} /> : null
+                        }
+                    </CenteringContainer>
                     <hr />
                     {
                         sloveneWord ? <SloveneWordDisplay word={sloveneWord} /> : null
