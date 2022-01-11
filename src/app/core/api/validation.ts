@@ -340,8 +340,8 @@ export interface SloveneWord {
     id: number,
     // Time is in the UTC format, see User for comment on time validation
     created_at: string,
-    edited_at: string,
-    alternative_form: string,
+    edited_at?: string,
+    alternative_form?: string,
 }
 const sloveneWordSchema: JSONSchemaType<SloveneWord> = {
     type: "object",
@@ -350,12 +350,12 @@ const sloveneWordSchema: JSONSchemaType<SloveneWord> = {
         description: { type: "string" },
         id: { type: "number" },
         created_at: { type: "string" },
-        edited_at: { type: "string" },
-        alternative_form: { type: "string" },
+        edited_at: { type: "string", nullable: true },
+        alternative_form: { type: "string", nullable: true },
     },
     required: [
         "word", "description", "id",
-        "created_at", "edited_at", "alternative_form",
+        "created_at",
     ],
 };
 export const validateSloveneWordSchema = ajv.compile(sloveneWordSchema);

@@ -4,7 +4,7 @@ import {
     Category,
     DetailResponse,
     ExtendedEnglishWord, Link,
-    SimpleEnglishWord,
+    SimpleEnglishWord, SloveneWord,
     Suggestion,
     User,
     validateCategoryArraySchema,
@@ -18,7 +18,7 @@ import {
     validateLinkSchema,
     validatePingResponseSchema,
     validateSimpleEnglishWordArraySchema,
-    validateSimpleEnglishWordSchema,
+    validateSimpleEnglishWordSchema, validateSloveneWordSchema,
     validateSuggestionArraySchema,
     validateSuggestionSchema,
     validateTokenResponseSchema,
@@ -634,11 +634,43 @@ export default class KolomonApi {
      * SLOVENE ENTRIES (get all, create, get one, delete one, modify one)
      */
     // TODO
+    /**
+     * API Endpoint: GET /lex/slovene/{slovene_id}
+     * @param id - ID of the slovene word.
+     * @return Slovene word object.
+     */
+    static async getSloveneWord(id: number): Promise<SloveneWord> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/slovene/${id}`), "GET", true,
+        );
+
+        if (!validateSloveneWordSchema(json)) {
+            throw new Error("getSloveneWord: Failed to validate SloveneWord");
+        }
+
+        return json;
+    }
 
     /*
      * TRANSLATION (get slovene translation from english word, link english word to slovene translation)
      */
     // TODO
+    /**
+     * API Endpoint: GET /lex/english/{english_id}/translation
+     * @param englishID - ID of the english word.
+     * @return Slovene word object - the translation.
+     */
+    static async getEnglishWordTranslation(englishID: number): Promise<SloveneWord> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/english/${englishID}/translation`), "GET", true,
+        );
+
+        if (!validateSloveneWordSchema(json)) {
+            throw new Error("getSloveneWord: Failed to validate SloveneWord");
+        }
+
+        return json;
+    }
 
     /*
      * OTHER (get recent, get orphans)

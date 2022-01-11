@@ -1,25 +1,25 @@
-import React, { FunctionComponent, ReactNode } from "react";
+import React, { ComponentType, ReactElement } from "react";
 import {
- useNavigate, useParams, NavigateFunction, Params,
+    NavigateFunction, Params, useNavigate, useParams,
 } from "react-router-dom";
 
 interface WithNavigationProp {
     navigate: NavigateFunction
 }
 
-export const withNavigation = (
-    WrappedComponent: FunctionComponent<WithNavigationProp>,
-) => (
-    props: Map<string, never>,
-): ReactNode => <WrappedComponent {...props} navigate={useNavigate()} />;
+export const withNavigation = <T extends WithNavigationProp>(
+    WrappedComponent: ComponentType<T>,
+): (props: T) => ReactElement => (
+    props: T,
+): ReactElement => <WrappedComponent {...props} navigate={useNavigate()} />;
 
 
-interface WithParamsProp {
-    params: Readonly<Params>
+export interface WithParamsProp {
+    params?: Readonly<Params>
 }
 
-export const withParams = (
-    WrappedComponent: FunctionComponent<WithParamsProp>,
-) => (
-    props: Map<string, never>,
-): ReactNode => <WrappedComponent {...props} params={useParams()} />;
+export const withParams = <T extends WithParamsProp>(
+    WrappedComponent: ComponentType<T>,
+): (props: T) => ReactElement => (
+    props: T,
+): ReactElement => <WrappedComponent {...props} params={useParams()} />;
