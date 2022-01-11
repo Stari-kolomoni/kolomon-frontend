@@ -1,24 +1,27 @@
+@use "../../vars" as vars;
 @use "../../design-system/typography" as typography;
 
 .page-translation .content {
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
+/*
+ * WORD BASE
+ */
 .word {
     display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 14% 26% 20% 20% 15%;
 
-    min-width: 700px;
-    min-height: 400px;
-    margin: 10px;
-}
+    min-width: 750px;
+    max-width: 80%;
+    min-height: 500px;
+    margin: 15px;
 
-.word--english {
-    // First column
+    h5 {
+        margin: 2px 6px;
+    }
+
     .word-name {
-        grid-column: 1 / span 1;
-        grid-row: 1 / span 1;
+        grid-area: title;
 
         font-family: typography.$font-family-primary;
         font-size: typography.$font-size-h3;
@@ -27,42 +30,80 @@
     }
 
     .word-description {
-        grid-column: 1 / span 1;
-        grid-row: 2 / span 1;
+        grid-area: description;
 
         font-family: typography.$font-family-secondary;
-        font-size: typography.$font-size-body-text;
+        font-size: typography.$font-size-larger-body-text;
         font-weight: 500;
-    }
 
-    // TODO
-
-    .word-suggestions {
-        grid-column: 1 / span 1;
-        grid-row: 3 / span 1;
-    }
-
-    .word-related {
-        grid-column: 1 / span 1;
-        grid-row: 4 / span 1;
+        text-indent: 1.5rem;
     }
 
     // Second column
-    .word-links {
-        grid-column: 2 / span 1;
-        grid-row: 2 / span 1;
-    }
+    .word-links-container {
+        grid-area: linkcontainer;
 
-    .word-state {
-        grid-column: 2 / span 1;
-        grid-row: 3 / span 1;
+        // Defines a subgrid
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.4fr 1.6fr;
+        grid-template-areas:
+            "."
+            "links";
+
+        .word-links-inner-container {
+            grid-area: links;
+        }
     }
 
     .word-last-edit {
-        grid-column: 2 / span 1;
-        grid-row: 5 / span 1;
+        grid-area: edits;
     }
 }
 
+/*
+ * ENGLISH WORD
+ */
+.word--english {
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 0.6fr 1.8fr 1.1fr 1fr 0.5fr;
+    grid-template-areas:
+        "title linkcontainer"
+        "description linkcontainer"
+        "suggestions state"
+        "related state"
+        ". edits";
+
+    .word-name {
+        color: vars.$secondary-even-darker;
+    }
+
+    .word-suggestions-container {
+        grid-area: suggestions;
+    }
+
+    .word-related-container {
+        grid-area: related;
+    }
+
+    .word-state-container {
+        grid-area: state;
+    }
+}
+
+/*
+ * SLOVENE WORD
+ */
 .word--slovene {
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 0.6fr 2fr 1.3fr 0.6fr;
+    grid-template-areas:
+        "title linkcontainer"
+        "description linkcontainer"
+        "related ."
+        ". edits";
+
+    .word-name {
+        color: vars.$primary-dark;
+    }
 }

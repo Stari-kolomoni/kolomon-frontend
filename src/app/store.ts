@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import loginReducer from "./kolomon/screens/login/loginSlice";
-import wordDisplayReducer from "./kolomon/wordDisplay/wordDisplaySlice";
+import wordDisplayReducer from "./kolomon/screens/wordDisplay/wordDisplaySlice";
 
 export const store = configureStore({
     reducer: {

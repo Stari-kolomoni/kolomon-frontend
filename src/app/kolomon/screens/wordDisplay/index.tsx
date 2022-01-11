@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import { RootState } from "../../store";
-import { withParams, WithParamsProp } from "../utilities";
+import { RootState } from "../../../store";
+import { withParams, WithParamsProp } from "../../utilities";
 import EnglishWordDisplay from "./englishWordDisplay";
 import SloveneWordDisplay from "./sloveneWordDisplay";
-import KolomonApi from "../../core/api";
+import KolomonApi from "../../../core/api";
 import { setEnglishWord, setSloveneWord } from "./wordDisplaySlice";
-import Logger, { Colour } from "../../core/logger";
-import BaseScreen from "../screens/baseScreen";
-import { CenteringContainer } from "../components/container";
+import Logger, { Colour } from "../../../core/logger";
+import BaseScreen from "../baseScreen";
+import { CenteringContainer } from "../../components/container";
 
 const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 
@@ -23,14 +23,16 @@ const mapDispatch = {
     dispatchSetSloveneWord: setSloveneWord,
 };
 const connector = connect(mapState, mapDispatch);
-type WordDisplayPropsFromRedux = ConnectedProps<typeof connector>;
+type WordDisplayScreenPropsFromRedux = ConnectedProps<typeof connector>;
 
 // Prop & State setup (merge redux and own props)
-interface WordDisplayProps extends WordDisplayPropsFromRedux, WithParamsProp {}
-interface WordDisplayState {}
+interface WordDisplayScreenProps
+    extends WordDisplayScreenPropsFromRedux, WithParamsProp {}
+interface WordDisplayScreenState {}
 
 // Component
-class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
+class WordDisplayScreen
+    extends Component<WordDisplayScreenProps, WordDisplayScreenState> {
     async fetchEnglishWordByID(englishID: string | null): Promise<void> {
         const { dispatchSetEnglishWord } = this.props;
         log.info(`Fetching english word (id=${englishID})`);
@@ -43,9 +45,7 @@ class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
         dispatchSetEnglishWord(englishWord);
     }
 
-    // eslint-disable-next-line class-methods-use-this
     async fetchSloveneTranslation(): Promise<void> {
-        // TODO
         const { dispatchSetSloveneWord, englishWord } = this.props;
         log.info(`Fetching slovene word associated with "${englishWord?.word}"`);
 
@@ -65,7 +65,7 @@ class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
             this.fetchEnglishWordByID(params?.wordId || null);
             return null;
         }
-        if (englishWord && !sloveneWord) {
+        if (!sloveneWord) {
             this.fetchSloveneTranslation();
             return null;
         }
@@ -74,18 +74,16 @@ class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
             <BaseScreen className="page-translation" showHeader>
                 <span>
                     <CenteringContainer>
-                        {
-                            englishWord ? <EnglishWordDisplay word={englishWord} /> : null
-                        }
+                        <EnglishWordDisplay word={englishWord} />
                     </CenteringContainer>
                     <hr />
-                    {
-                        sloveneWord ? <SloveneWordDisplay word={sloveneWord} /> : null
-                    }
+                    <CenteringContainer>
+                        <SloveneWordDisplay word={sloveneWord} />
+                    </CenteringContainer>
                 </span>
             </BaseScreen>
         );
     }
 }
 
-export default connector(withParams(MainWordDisplay));
+export default connector(withParams(WordDisplayScreen));

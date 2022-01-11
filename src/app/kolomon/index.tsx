@@ -8,11 +8,10 @@ import KolomonStorage from "../core/storage";
 import Logger, { Colour } from "../core/logger";
 import KolomonApi from "../core/api";
 
-import Login from "./screens/login";
-import Home from "./screens/home";
+import LoginScreen from "./screens/login";
+import HomeScreen from "./screens/home";
 import { logIn, LoginState } from "./screens/login/loginSlice";
-import MainWordDisplay from "./wordDisplay";
-import { withNavigation, WithNavigationProp } from "./utilities";
+import WordDisplayScreen from "./screens/wordDisplay";
 
 const log = new Logger("kolomonapp", Colour.BITTER_LIME);
 
@@ -87,7 +86,7 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
         if (loginState === LoginState.LOGGED_OUT) {
             return (
                 <Routes>
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<LoginScreen />} />
                     <Route
                         path="*"
                         element={<Navigate to="/login" />}
@@ -98,9 +97,9 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
 
         return (
             <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/translation/:wordId" element={<MainWordDisplay />} />
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/home" element={<HomeScreen />} />
+                <Route path="/translation/:wordId" element={<WordDisplayScreen />} />
                 <Route
                     path="*"
                     element={<Navigate to="/home" />}

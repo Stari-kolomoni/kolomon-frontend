@@ -25,18 +25,18 @@ const mapDispatch = {
     dispatchLogIn: logIn,
 };
 const connector = connect(mapState, mapDispatch);
-type LoginPropsFromRedux = ConnectedProps<typeof connector>;
+type LoginScreenPropsFromRedux = ConnectedProps<typeof connector>;
 
-interface LoginProps extends LoginPropsFromRedux {}
+interface LoginScreenProps extends LoginScreenPropsFromRedux {}
 
-interface LoginState {
+interface LoginScreenState {
     username: string,
     password: string,
     performRedirectToHome: boolean,
 }
 
-class LoginScreen extends Component<LoginProps, LoginState> {
-    constructor(props: LoginProps) {
+class LoginScreen extends Component<LoginScreenProps, LoginScreenState> {
+    constructor(props: LoginScreenProps) {
         super(props);
         this.state = {
             username: "",

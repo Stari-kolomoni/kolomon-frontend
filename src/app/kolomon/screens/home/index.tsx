@@ -59,20 +59,20 @@ const mapState = (state: RootState) => ({
 });
 const mapDispatch = {};
 const connector = connect(mapState, mapDispatch);
-type HomePropsFromRedux = ConnectedProps<typeof connector>;
+type HomeScreenPropsFromRedux = ConnectedProps<typeof connector>;
 
 // Prop & State setup (merge redux and own props)
 // interface HomeProps extends HomePropsFromRedux, WithNavigationProp {}
-interface HomeProps extends HomePropsFromRedux, WithNavigationProp {}
+interface HomeScreenProps extends HomeScreenPropsFromRedux, WithNavigationProp {}
 
-interface HomeState {
+interface HomeScreenState {
     englishWordList: SimpleEnglishWord[];
     sloveneWordList: SloveneWord[];
 }
 
 // Component
-class Home extends Component<HomeProps, HomeState> {
-    constructor(props: HomeProps) {
+class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
+    constructor(props: HomeScreenProps) {
         super(props);
         this.state = {
             englishWordList: [],
@@ -83,7 +83,7 @@ class Home extends Component<HomeProps, HomeState> {
     async componentDidMount() {
         const wordList = await KolomonApi.getAllEnglishWords();
         this.setState(
-            produce((previousState: HomeState) => {
+            produce((previousState: HomeScreenState) => {
                 previousState.englishWordList = wordList;
             }),
         );
@@ -131,4 +131,4 @@ class Home extends Component<HomeProps, HomeState> {
 }
 
 // export default connector(withNavigation(Home));
-export default withNavigation(Home);
+export default withNavigation(HomeScreen);
