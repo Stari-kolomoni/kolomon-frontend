@@ -1,6 +1,6 @@
 @use "page-base" as base;
 
-.login-page {
+.page-login {
     @include base.page-base();
 
     min-height: 100%;

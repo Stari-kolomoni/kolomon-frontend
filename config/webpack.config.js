@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const webpackConfig = {
+module.exports = {
     mode: mainConfig.isProductionEnv ? "production" : "development",
 
     entry: [
@@ -93,5 +93,3 @@ const webpackConfig = {
         }),
     ]
 };
-
-module.exports = webpackConfig;

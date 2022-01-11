@@ -8,6 +8,7 @@ import SloveneWordDisplay from "./sloveneWordDisplay";
 import KolomonApi from "../../core/api";
 import { setEnglishWord, setSloveneWord } from "./wordDisplaySlice";
 import Logger, { Colour } from "../../core/logger";
+import BaseScreen from "../screens/baseScreen";
 
 const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 
@@ -61,21 +62,25 @@ class MainWordDisplay extends Component<WordDisplayProps, WordDisplayState> {
         // TODO Not the best approach, rethink how to check this on prop update.
         if (!englishWord) {
             this.fetchEnglishWordByID(params?.wordId || null);
+            return null;
         }
         if (englishWord && !sloveneWord) {
             this.fetchSloveneTranslation();
+            return null;
         }
 
         return (
-            <span>
-                {
-                    englishWord ? <EnglishWordDisplay word={englishWord} /> : null
-                }
-                <hr />
-                {
-                    sloveneWord ? <SloveneWordDisplay word={sloveneWord} /> : null
-                }
-            </span>
+            <BaseScreen className="page-translation" showHeader>
+                <span>
+                    {
+                        englishWord ? <EnglishWordDisplay word={englishWord} /> : null
+                    }
+                    <hr />
+                    {
+                        sloveneWord ? <SloveneWordDisplay word={sloveneWord} /> : null
+                    }
+                </span>
+            </BaseScreen>
         );
     }
 }

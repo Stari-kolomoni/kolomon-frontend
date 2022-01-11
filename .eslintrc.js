@@ -27,6 +27,7 @@ module.exports = {
         "react/prop-types": "off",
         "react/jsx-one-expression-per-line": "off",
         "react/jsx-props-no-spreading": "off",
+        "react/no-danger": "off",
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/quotes": ["error", "double"],
         "@typescript-eslint/no-unused-vars": ["error", { ignoreRestSiblings: true, varsIgnorePattern: "^_" }],

@@ -2,7 +2,7 @@
 @use "../../modules/common" as common;
 @use "../../vars" as vars;
 
-.home-page {
+.page-home {
     @include base.page-base();
 
     #main-search-bar {

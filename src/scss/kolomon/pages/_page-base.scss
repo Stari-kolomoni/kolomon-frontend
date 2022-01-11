@@ -3,3 +3,8 @@
 @mixin page-base {
     background-color: vars.$background-primary;
 }
+
+.page-main {
+    width: 100%;
+    height: 100%;
+}

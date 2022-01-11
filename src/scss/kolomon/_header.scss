@@ -1,3 +1,51 @@
-.header {
+@use "../vars" as vars;
+@use "../modules/common" as common;
+@use "../design-system/typography" as typography;
 
+$header-height: 66px;
+$vertical-margin: 4px;
+$horizontal-margin: 6px;
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 100;
+    position: relative;
+
+    width: 100%;
+    background-color: vars.$background-header;
+    box-shadow:  0 2px 2px 0 rgba(0, 0, 0, 0.26);
+
+    height: $header-height;
+}
+
+.header__block {
+    margin: $vertical-margin $horizontal-margin;
+
+    &--left {
+        @include common.flex-row-center(false, true);
+    }
+}
+
+#header-icon {
+    margin-left: 8px;
+    height: $header-height - 16px;
+    width: auto;
+}
+
+#kolomon-title {
+    margin-left: 12px;
+    letter-spacing: -0.04em;
+    font-family: typography.$font-family-primary;
+    font-size: typography.$font-size-h4;
+    font-weight: 700;
+}
+
+#user-info {
+    margin-right: 10px;
+    font-family: typography.$font-family-secondary;
+    font-size: typography.$font-size-body-text;
 }

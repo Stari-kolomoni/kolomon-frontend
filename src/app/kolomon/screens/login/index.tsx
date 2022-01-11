@@ -3,16 +3,17 @@ import { connect, ConnectedProps } from "react-redux";
 import produce from "immer";
 import { Navigate } from "react-router-dom";
 
-import { RootState } from "../../store";
-import Logger, { Colour } from "../../core/logger";
-import KolomonApi from "../../core/api";
-import { setGlobalBearerToken } from "../../core/api/requests";
+import { RootState } from "../../../store";
+import Logger, { Colour } from "../../../core/logger";
+import KolomonApi from "../../../core/api";
+import { setGlobalBearerToken } from "../../../core/api/requests";
 
-import { Button } from "../components/button";
-import { Form, FormTextInput } from "../components/form";
-import { ElevatedContainer } from "../components/container";
-import { H1 } from "../components/text";
+import { Button } from "../../components/button";
+import { Form, FormTextInput } from "../../components/form";
+import { ElevatedContainer } from "../../components/container";
+import { H1 } from "../../components/text";
 import { logIn, LoginState as LoginSliceState } from "./loginSlice";
+import BaseScreen from "../baseScreen";
 
 const log = new Logger("login", Colour.DARK_PURPLE);
 
@@ -34,7 +35,7 @@ interface LoginState {
     performRedirectToHome: boolean,
 }
 
-class Login extends Component<LoginProps, LoginState> {
+class LoginScreen extends Component<LoginProps, LoginState> {
     constructor(props: LoginProps) {
         super(props);
         this.state = {
@@ -99,7 +100,7 @@ class Login extends Component<LoginProps, LoginState> {
         }
 
         return (
-            <div className="login-page">
+            <BaseScreen className="page-login" showHeader={false}>
                 <H1 content="Kolomon" className="kolomon-title" />
 
                 <ElevatedContainer className="pt20 pb10 pl30 pr30">
@@ -124,9 +125,9 @@ class Login extends Component<LoginProps, LoginState> {
                         />
                     </Form>
                 </ElevatedContainer>
-            </div>
+            </BaseScreen>
         );
     }
 }
 
-export default connector(Login);
+export default connector(LoginScreen);

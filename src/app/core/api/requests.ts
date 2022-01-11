@@ -19,17 +19,22 @@ if (!window.fetch) {
 }
 
 /**
- * Retrieve an Oauth2 bearer token from browser storage.
+ * Retrieve an OAuth2 bearer token from browser storage.
  */
 const getGlobalBearerToken = (): string | null => authStorage.get("oauth2-bearer");
 
 /**
- * Set the Oauth2 bearer token. It will be saved in the browser's local storage.
+ * Set the OAuth2 bearer token. It will be saved in the browser's local storage.
  * @param token
  */
 const setGlobalBearerToken = (token: string): void => {
     authStorage.set("oauth2-bearer", token);
 };
+
+/**
+ * Clear the OAuth2 bearer token from storage.
+ */
+const clearGlobalBearerToken = (): boolean => authStorage.delete("oauth2-bearer");
 
 /**
  * Perform a HTTP(S) request, including handling errors and JSON.
@@ -109,6 +114,6 @@ const request = async (
 
 export {
     JSONObject,
-    getGlobalBearerToken, setGlobalBearerToken,
+    getGlobalBearerToken, setGlobalBearerToken, clearGlobalBearerToken,
     authStorage, request,
 };

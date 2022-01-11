@@ -62,7 +62,7 @@ export default class KolomonStorage {
      * @param key - Key to check.
      */
     exists(key: string): boolean {
-        return this.storageApi.getItem(this.mergeKeyWithPrefix(key)) !== null;
+        return this.get(key) !== null;
     }
 
     /**
@@ -71,7 +71,7 @@ export default class KolomonStorage {
      */
     delete(key: string): boolean {
         if (this.exists(key)) {
-            this.storageApi.removeItem(key);
+            this.storageApi.removeItem(this.mergeKeyWithPrefix(key));
             return true;
         }
 

@@ -1,9 +1,13 @@
+/**
+ * A set of Higher order components that wrap a React Component with an additional
+ * prop for React Router navigation, parameters, etc.
+ */
 import React, { ComponentType, ReactElement } from "react";
 import {
     NavigateFunction, Params, useNavigate, useParams,
 } from "react-router-dom";
 
-interface WithNavigationProp {
+export interface WithNavigationProp {
     navigate: NavigateFunction
 }
 

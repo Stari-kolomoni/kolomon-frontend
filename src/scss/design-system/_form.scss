@@ -15,7 +15,7 @@
 
 // This is a div that contains both .km-label and .km-input
 .km-input-label-container {
-    @include c.flex-column-center();
+    @include c.flex-column-center(false, true);
 }
 
 // This is the label before a .km-input

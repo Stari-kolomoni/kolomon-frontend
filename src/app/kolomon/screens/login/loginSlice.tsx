@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../core/api/validation";
+import { User } from "../../../core/api/validation";
 
 export enum LoginState {
     LOGGED_OUT = "LOGGED_OUT",

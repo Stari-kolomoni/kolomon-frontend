@@ -1,12 +1,13 @@
 import React, { ChangeEvent, Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { H2 } from "../components/text";
-import { RootState } from "../../store";
-import { FormTextInputNoLabel } from "../components/form";
-import { CenteringContainer, Container } from "../components/container";
 
-import PlusSVG from "../../../assets/plus.svg";
-import { Button } from "../components/button";
+import { H2 } from "../../components/text";
+import { FormTextInputNoLabel } from "../../components/form";
+import { CenteringContainer, Container } from "../../components/container";
+import { RootState } from "../../../store";
+
+import PlusSVG from "../../../../assets/plus.svg";
+import BaseScreen from "../baseScreen";
 
 interface MainSearchBarProps {}
 
@@ -65,17 +66,22 @@ class Home extends Component<HomeProps, HomeState> {
     render() {
         const { user } = this.props;
 
-        const username = user ? user.username.replace(/^\w/, (c) => c.toUpperCase()) : "";
+        const username = user
+            ? user.username.replace(/^\w/, (c: string) => c.toUpperCase())
+            : "";
 
         return (
-            <div className="home-page">
+            <BaseScreen className="page-home" showHeader>
                 <Container containerType="narrow">
-                    <H2 content={`Pozdravljen, ${username}`} className="text-center" />
+                    <H2
+                        content={`Pozdravljen, ${username}`}
+                        className="text-center"
+                    />
                     <CenteringContainer>
                         <MainSearchBar />
                     </CenteringContainer>
                 </Container>
-            </div>
+            </BaseScreen>
         );
     }
 }
