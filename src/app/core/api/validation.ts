@@ -130,10 +130,10 @@ export interface SimpleEnglishWord {
     word: string,
     description: string,
     id: number,
-    translation_state: number,
+    translation_state?: number,
     // Time is in the UTC format, see User for comment on time validation
     created_at: string,
-    edited_at: string,
+    edited_at?: string,
 }
 const simpleEnglishWordSchema: JSONSchemaType<SimpleEnglishWord> = {
     type: "object",
@@ -141,13 +141,12 @@ const simpleEnglishWordSchema: JSONSchemaType<SimpleEnglishWord> = {
         word: { type: "string" },
         description: { type: "string" },
         id: { type: "number" },
-        translation_state: { type: "number" },
+        translation_state: { type: "number", nullable: true },
         created_at: { type: "string" },
-        edited_at: { type: "string" },
+        edited_at: { type: "string", nullable: true },
     },
     required: [
-        "word", "description", "id",
-        "translation_state", "created_at", "edited_at",
+        "word", "description", "id", "created_at",
     ],
 };
 export const validateSimpleEnglishWordSchema = ajv.compile(simpleEnglishWordSchema);

@@ -1,11 +1,16 @@
 import React, { ChangeEvent, Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import produce from "immer";
 
 import { H2 } from "../../components/text";
 import { FormTextInputNoLabel } from "../../components/form";
-import { CenteringContainer, Container } from "../../components/container";
-import { RootState } from "../../../store";
+import { CenteringContainer, Container, ElevatedContainer } from "../../components/container";
+import { Button } from "../../components/button";
 
+import { SimpleEnglishWord, SloveneWord } from "../../../core/api/validation";
+import KolomonApi from "../../../core/api";
+import { withNavigation, WithNavigationProp } from "../../utilities";
+import { RootState } from "../../../store";
 import PlusSVG from "../../../../assets/plus.svg";
 import BaseScreen from "../baseScreen";
 
@@ -57,14 +62,41 @@ const connector = connect(mapState, mapDispatch);
 type HomePropsFromRedux = ConnectedProps<typeof connector>;
 
 // Prop & State setup (merge redux and own props)
-interface HomeProps extends HomePropsFromRedux {}
+// interface HomeProps extends HomePropsFromRedux, WithNavigationProp {}
+interface HomeProps extends HomePropsFromRedux, WithNavigationProp {}
 
-interface HomeState {}
+interface HomeState {
+    englishWordList: SimpleEnglishWord[];
+    sloveneWordList: SloveneWord[];
+}
 
 // Component
 class Home extends Component<HomeProps, HomeState> {
+    constructor(props: HomeProps) {
+        super(props);
+        this.state = {
+            englishWordList: [],
+            sloveneWordList: [],
+        };
+    }
+
+    async componentDidMount() {
+        const wordList = await KolomonApi.getAllEnglishWords();
+        this.setState(
+            produce((previousState: HomeState) => {
+                previousState.englishWordList = wordList;
+            }),
+        );
+    }
+
+    redirectToEnglishWord(englishWordID: number): void {
+        const { navigate } = this.props;
+        navigate(`/translation/${englishWordID}`);
+    }
+
     render() {
         const { user } = this.props;
+        const { englishWordList } = this.state;
 
         const username = user
             ? user.username.replace(/^\w/, (c: string) => c.toUpperCase())
@@ -80,10 +112,23 @@ class Home extends Component<HomeProps, HomeState> {
                     <CenteringContainer>
                         <MainSearchBar />
                     </CenteringContainer>
+                    <ElevatedContainer>
+                        {englishWordList.map((word) => (
+                            <Button
+                                content={word.word}
+                                type="button"
+                                className="km-button km-button--primary"
+                                onClick={
+                                    () => this.redirectToEnglishWord(word.id)
+                                }
+                            />
+                        ))}
+                    </ElevatedContainer>
                 </Container>
             </BaseScreen>
         );
     }
 }
 
-export default connector(Home);
+// export default connector(withNavigation(Home));
+export default withNavigation(Home);

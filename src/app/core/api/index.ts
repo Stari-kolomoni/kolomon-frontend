@@ -295,7 +295,7 @@ export default class KolomonApi {
     static async getAllEnglishWords(page = 0): Promise<SimpleEnglishWord[]> {
         const [_response, json] = await request(
             constructUrl("/lex/english/"), "GET", true,
-            { page }, "json",
+            { page }, "url",
         );
 
         if (!validateSimpleEnglishWordArraySchema(json)) {
