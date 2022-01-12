@@ -47,10 +47,13 @@ class WordDisplayScreen
 
         const englishWord = await KolomonApi.getEnglishWord(wordID);
         const englishWordLinks = await KolomonApi.getAllEnglishWordLinks(wordID);
+        const englishSuggestions
+            = await KolomonApi.getAllEnglishWordTranslationSuggestions(wordID);
 
         dispatchSetEnglishData({
             word: englishWord,
             links: englishWordLinks,
+            suggestions: englishSuggestions,
         });
     }
 
@@ -71,11 +74,16 @@ class WordDisplayScreen
 
     render() {
         const {
-            english: { word: englishWord, links: englishLinks },
+            english: {
+                word: englishWord,
+                links: englishLinks,
+                suggestions: englishSuggestions,
+            },
             slovene: { word: sloveneWord },
             params,
         } = this.props;
 
+        // If untfetched, request data from the server.
         // TODO Not the best approach, rethink how to check this on prop update.
         if (!englishWord) {
             this.fetchCompleteEnglishWord(params?.wordId || null);
@@ -85,15 +93,21 @@ class WordDisplayScreen
             this.fetchCompleteSloveneTranslation();
             return null;
         }
-        if (!englishLinks) {
-            throw new Error("English word is not empty, but its links are?");
+
+        // Final check before rendering.
+        if (!englishLinks || !englishSuggestions) {
+            throw new Error("Missing some data!");
         }
 
         return (
             <BaseScreen className="page-translation" showHeader>
                 <span>
                     <CenteringContainer>
-                        <EnglishWordDisplay word={englishWord} links={englishLinks} />
+                        <EnglishWordDisplay
+                            word={englishWord}
+                            links={englishLinks}
+                            suggestions={englishSuggestions}
+                        />
                     </CenteringContainer>
                     <hr />
                     <CenteringContainer>

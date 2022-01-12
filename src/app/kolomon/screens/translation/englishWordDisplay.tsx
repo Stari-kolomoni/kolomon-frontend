@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
-import { ExtendedEnglishWord, Link } from "../../../core/api/validation";
+import { ExtendedEnglishWord, Link, Suggestion } from "../../../core/api/validation";
 import WordLinks from "./links";
+import WordSuggestions from "./suggestions";
 
 interface EnglishWordProps {
     word: ExtendedEnglishWord,
     links: Link[],
+    suggestions: Suggestion[],
 }
 
 interface EnglishWordState {}
@@ -13,7 +15,7 @@ interface EnglishWordState {}
 // Component
 class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
     render() {
-        const { word, links } = this.props;
+        const { word, links, suggestions } = this.props;
 
         return (
             <div className="word word--english">
@@ -21,7 +23,7 @@ class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
                 <div className="word-description">{word.description}</div>
                 <div className="word-suggestions-container">
                     <h5>Predlogi</h5>
-                    <span className="word-suggestions">predloge</span>
+                    <WordSuggestions suggestions={suggestions} language="slovene" />
                 </div>
                 <div className="word-related-container">
                     <h5>Povezano</h5>

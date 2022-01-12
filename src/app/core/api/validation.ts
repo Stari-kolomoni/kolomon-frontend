@@ -221,7 +221,7 @@ export interface Suggestion {
     id: number,
     // Time is in the UTC format, see User for comment on time validation
     created_at: string,
-    edited_at: string,
+    edited_at?: string,
 }
 const suggestionSchema: JSONSchemaType<Suggestion> = {
     type: "object",
@@ -231,11 +231,11 @@ const suggestionSchema: JSONSchemaType<Suggestion> = {
         separate_gender_form: { type: "boolean" },
         id: { type: "number" },
         created_at: { type: "string" },
-        edited_at: { type: "string" },
+        edited_at: { type: "string", nullable: true },
     },
     required: [
         "suggestion", "comment", "separate_gender_form",
-        "id", "created_at", "edited_at",
+        "id", "created_at",
     ],
 };
 export const validateSuggestionSchema = ajv.compile(suggestionSchema);

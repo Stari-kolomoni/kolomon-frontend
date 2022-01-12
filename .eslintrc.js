@@ -15,11 +15,12 @@ module.exports = {
     rules: {
         "indent": "off",
         "quotes": ["error", "double"],
-        "max-len": ["warn", { comments: 120, code: 90 }],
+        "max-len": ["warn", { comments: 120, code: 120 }],
         "no-trailing-spaces": ["error", { skipBlankLines: true }],
         "no-param-reassign": "off",
         "prefer-const": ["error", { destructuring: "all" }],
         "no-multiple-empty-lines": ["error", { max: 5, maxEOF: 1}],
+        "operator-linebreak": ["warn", "before"],
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", "first"],
         "react/prefer-stateless-function": "warn",
