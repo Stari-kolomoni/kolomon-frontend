@@ -542,7 +542,7 @@ export default class KolomonApi {
         const [_response, json] = await request(
             constructUrl(`/lex/english/${wordID}/links/`),
             "GET", true,
-            { page }, "json",
+            { page }, "url",
         );
 
         if (!validateLinkArraySchema(json)) {

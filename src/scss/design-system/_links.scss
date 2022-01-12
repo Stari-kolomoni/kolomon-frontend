@@ -1,0 +1,5 @@
+@use "../vars" as vars;
+
+.km-link {
+    text-underline: vars.$link-blue;
+}

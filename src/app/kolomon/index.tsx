@@ -11,7 +11,7 @@ import KolomonApi from "../core/api";
 import LoginScreen from "./screens/login";
 import HomeScreen from "./screens/home";
 import { logIn, LoginState } from "./screens/login/loginSlice";
-import WordDisplayScreen from "./screens/wordDisplay";
+import WordDisplayScreen from "./screens/translation";
 
 const log = new Logger("kolomonapp", Colour.BITTER_LIME);
 

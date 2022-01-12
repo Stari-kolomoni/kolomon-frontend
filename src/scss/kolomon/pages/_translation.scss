@@ -1,4 +1,5 @@
 @use "../../vars" as vars;
+@use "../../modules/common" as common;
 @use "../../design-system/typography" as typography;
 
 .page-translation .content {
@@ -58,6 +59,44 @@
 
     .word-last-edit {
         grid-area: edits;
+    }
+}
+
+/*
+ * COMMON RELATED STYLES
+ */
+.word-links {
+    margin-top: 6px;
+
+    .link {
+        display: grid;
+        grid-template-columns: 0.35fr 1.5fr;
+        grid-template-rows: 1.1fr 0.9fr;
+        grid-template-areas:
+            "icon title"
+            "icon domain";
+        margin: 3px 6px;
+
+        font-family: typography.$font-family-secondary;
+        font-size: typography.$font-size-body-text;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .link-icon {
+        @include common.flex-row-center(true, true);
+        grid-area: icon;
+    }
+
+    .link-title {
+        grid-area: title;
+    }
+
+    .link-domain {
+        grid-area: domain;
+
+        font-size: typography.$font-size-alt-text;
+        color: vars.$body-text-even-lighter;
     }
 }
 

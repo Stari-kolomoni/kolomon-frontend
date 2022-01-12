@@ -6,7 +6,7 @@ import { withParams, WithParamsProp } from "../../utilities";
 import EnglishWordDisplay from "./englishWordDisplay";
 import SloveneWordDisplay from "./sloveneWordDisplay";
 import KolomonApi from "../../../core/api";
-import { setEnglishWord, setSloveneWord } from "./wordDisplaySlice";
+import { setEnglishData, setEnglishWord, setEnglishWordLinks, setSloveneWord } from "./translationSlice";
 import Logger, { Colour } from "../../../core/logger";
 import BaseScreen from "../baseScreen";
 import { CenteringContainer } from "../../components/container";
@@ -15,11 +15,13 @@ const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 
 // Redux setup (mapStateToProps, mapDispatchToProps, connector)
 const mapState = (state: RootState) => ({
-    englishWord: state.wordDisplay.englishWord,
-    sloveneWord: state.wordDisplay.sloveneWord,
+    // englishWord: state.translation.englishWord,
+    // englishWordLinks: state.translation.englishWordLinks,
+    // sloveneWord: state.translation.sloveneWord,
+    ...state.translation,
 });
 const mapDispatch = {
-    dispatchSetEnglishWord: setEnglishWord,
+    dispatchSetEnglishData: setEnglishData,
     dispatchSetSloveneWord: setSloveneWord,
 };
 const connector = connect(mapState, mapDispatch);
@@ -33,20 +35,30 @@ interface WordDisplayScreenState {}
 // Component
 class WordDisplayScreen
     extends Component<WordDisplayScreenProps, WordDisplayScreenState> {
-    async fetchEnglishWordByID(englishID: string | null): Promise<void> {
-        const { dispatchSetEnglishWord } = this.props;
+    async fetchCompleteEnglishWord(englishID: string | null): Promise<void> {
+        const { dispatchSetEnglishData } = this.props;
         log.info(`Fetching english word (id=${englishID})`);
 
         if (englishID === null) {
             throw new Error("Invalid english word id!");
         }
 
-        const englishWord = await KolomonApi.getEnglishWord(parseInt(englishID, 10));
-        dispatchSetEnglishWord(englishWord);
+        const wordID = parseInt(englishID, 10);
+
+        const englishWord = await KolomonApi.getEnglishWord(wordID);
+        const englishWordLinks = await KolomonApi.getAllEnglishWordLinks(wordID);
+
+        dispatchSetEnglishData({
+            word: englishWord,
+            links: englishWordLinks,
+        });
     }
 
-    async fetchSloveneTranslation(): Promise<void> {
-        const { dispatchSetSloveneWord, englishWord } = this.props;
+    async fetchCompleteSloveneTranslation(): Promise<void> {
+        const {
+            dispatchSetSloveneWord,
+            english: { word: englishWord },
+        } = this.props;
         log.info(`Fetching slovene word associated with "${englishWord?.word}"`);
 
         if (typeof englishWord?.id === "undefined") {
@@ -58,23 +70,30 @@ class WordDisplayScreen
     }
 
     render() {
-        const { englishWord, sloveneWord, params } = this.props;
+        const {
+            english: { word: englishWord, links: englishLinks },
+            slovene: { word: sloveneWord },
+            params,
+        } = this.props;
 
         // TODO Not the best approach, rethink how to check this on prop update.
         if (!englishWord) {
-            this.fetchEnglishWordByID(params?.wordId || null);
+            this.fetchCompleteEnglishWord(params?.wordId || null);
             return null;
         }
         if (!sloveneWord) {
-            this.fetchSloveneTranslation();
+            this.fetchCompleteSloveneTranslation();
             return null;
+        }
+        if (!englishLinks) {
+            throw new Error("English word is not empty, but its links are?");
         }
 
         return (
             <BaseScreen className="page-translation" showHeader>
                 <span>
                     <CenteringContainer>
-                        <EnglishWordDisplay word={englishWord} />
+                        <EnglishWordDisplay word={englishWord} links={englishLinks} />
                     </CenteringContainer>
                     <hr />
                     <CenteringContainer>
