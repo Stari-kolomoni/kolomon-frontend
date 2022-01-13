@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
 import { RootState } from "../../../store";
@@ -95,11 +95,11 @@ class WordDisplayScreen
 
     render() {
         const {
-            english, slovene,
+            fetched, english, slovene,
         } = this.props;
 
         // Final check before rendering.
-        if (!english || !slovene) {
+        if (!fetched) {
             return (
                 <BaseScreen className="page-translation" showHeader>
                     <CenteringContainer>
@@ -113,29 +113,45 @@ class WordDisplayScreen
             );
         }
 
-        const {
-            word: englishWord,
-            links: englishLinks,
-            suggestions: englishSuggestions,
-            related: englishRelated,
-        } = english;
+        if (!english && !slovene) {
+            throw new Error("Fetched data, but both english and slovene word are missing!");
+        }
 
-        const {
-            word: sloveneWord,
-        } = slovene;
+        let englishDisplay: ReactElement | null = null;
+        if (english) {
+            const {
+                word: englishWord,
+                links: englishLinks,
+                suggestions: englishSuggestions,
+                related: englishRelated,
+            } = english;
+            englishDisplay = (
+                <EnglishWordDisplay
+                    word={englishWord}
+                    links={englishLinks}
+                    suggestions={englishSuggestions}
+                    related={englishRelated}
+                />
+            );
+        }
+
+        let sloveneDisplay: ReactElement | null = null;
+        if (slovene) {
+            const {
+                word: sloveneWord,
+            } = slovene;
+            sloveneDisplay = (
+                <SloveneWordDisplay word={sloveneWord} />
+            );
+        }
 
         return (
             <BaseScreen className="page-translation" showHeader>
                 <CenteringContainer>
                     <div className="translation-container">
-                        <EnglishWordDisplay
-                            word={englishWord}
-                            links={englishLinks}
-                            suggestions={englishSuggestions}
-                            related={englishRelated}
-                        />
+                        {englishDisplay}
                         <hr />
-                        <SloveneWordDisplay word={sloveneWord} />
+                        {sloveneDisplay}
                     </div>
                 </CenteringContainer>
             </BaseScreen>
