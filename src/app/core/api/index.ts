@@ -670,17 +670,20 @@ export default class KolomonApi {
     /**
      * API Endpoint: GET /lex/english/{english_id}/translation
      * @param englishID - ID of the english word.
-     * @return Slovene word object - the translation.
+     * @return Slovene word object - the translation. Null if no translation exists.
      */
-    static async getEnglishWordTranslation(englishID: number): Promise<SloveneWord> {
-        const [_response, json] = await request(
+    static async getEnglishWordTranslation(englishID: number): Promise<SloveneWord | null> {
+        const [response, json] = await request(
             constructUrl(`/lex/english/${englishID}/translation`), "GET", true,
         );
+
+        if (response.status === 404) {
+            return null;
+        }
 
         if (!validateSloveneWordSchema(json)) {
             throw new Error("getSloveneWord: Failed to validate SloveneWord");
         }
-
         return json;
     }
 

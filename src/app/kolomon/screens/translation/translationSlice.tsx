@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-    ExtendedEnglishWord, Link, Suggestion,
-    SloveneWord, RelatedWord,
-} from "../../../core/api/validation";
+import { ExtendedEnglishWord, Link, RelatedWord, SloveneWord, Suggestion, } from "../../../core/api/validation";
 import KolomonApi from "../../../core/api";
+import Logger, { Colour } from "../../../core/logger";
+
+const log = new Logger("translation slice", Colour.DARK_LIVER);
 
 /*
  * State
@@ -20,11 +20,13 @@ interface ReduxSloveneWordState {
 }
 
 export interface ReduxWordDisplayState {
+    fetched: boolean,
     english: ReduxEnglishWordState | null,
     slovene: ReduxSloveneWordState | null,
 }
 
 const initialWordDisplayState: ReduxWordDisplayState = {
+    fetched: false,
     english: null,
     slovene: null,
 };
@@ -49,6 +51,9 @@ const _fetchCompleteEnglishWord = async (wordID: number) => {
 
 const _fetchCompleteSloveneWord = async (englishWordID: number) => {
     const sloveneWord = await KolomonApi.getEnglishWordTranslation(englishWordID);
+    if (sloveneWord === null) {
+        return null;
+    }
 
     return {
         word: sloveneWord,
@@ -68,7 +73,9 @@ export const fetchCompleteSloveneWord = createAsyncThunk(
 export const fetchCompleteTranslation = createAsyncThunk(
     "translation/fetchCompleteTranslation",
     async (englishWordID: number) => {
+        log.debug("Fetching complete english word.");
         const englishData = await _fetchCompleteEnglishWord(englishWordID);
+        log.debug("Fetching complete slovene word.");
         const sloveneData = await _fetchCompleteSloveneWord(englishWordID);
 
         return {
@@ -109,6 +116,7 @@ export const translationSlice = createSlice({
         clearTranslationData(state) {
             state.english = null;
             state.slovene = null;
+            state.fetched = false;
         },
     },
     extraReducers: (builder) => {
@@ -131,6 +139,7 @@ export const translationSlice = createSlice({
             (state, action) => {
                 state.english = action.payload.english;
                 state.slovene = action.payload.slovene;
+                state.fetched = true;
             },
         );
     },

@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 
-import { ExtendedEnglishWord, Link, RelatedWord, Suggestion } from "../../../core/api/validation";
+import {
+    ExtendedEnglishWord, Link, RelatedWord, Suggestion,
+} from "../../../core/api/validation";
 import WordLinks from "./links";
 import WordSuggestions from "./suggestions";
 import WordRelated from "./related";
+import Logger, { Colour } from "../../../core/logger";
+
+const log = new Logger("english word", Colour.BITTER_LIME);
 
 interface EnglishWordProps {
     word: ExtendedEnglishWord,
@@ -21,6 +26,33 @@ class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
             word, links,
             suggestions, related,
         } = this.props;
+
+        const hasBeenEdited = word.edited_at !== null;
+        let date: Date;
+        if (hasBeenEdited) {
+            date = new Date(word.edited_at);
+        } else {
+            date = new Date(word.created_at);
+        }
+        const dateString = date.toDateString();
+
+        let lastEditContents: ReactElement;
+        if (word.edited_by_name) {
+            lastEditContents = (
+                <div className="word-last-edit">
+                    {hasBeenEdited ? "uredil" : "ustvaril"} uporabnik
+                    &nbsp;<span id="user-name">{word.edited_by_name}</span>
+                    &nbsp;({dateString})
+                </div>
+            );
+        } else {
+            lastEditContents = (
+                <div className="word-last-edit">
+                    {hasBeenEdited ? "uredil" : "ustvaril"} neznan uporabnik
+                    ({dateString})
+                </div>
+            );
+        }
 
         return (
             <div className="word word--english">
@@ -44,9 +76,7 @@ class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
                     <h5>Stanje</h5>
                     <span className="word-state" />
                 </div>
-                <div className="word-last-edit">
-                    Nazadnje urejeno: {word.edited_at.toString()}
-                </div>
+                {lastEditContents}
             </div>
         );
     }

@@ -169,7 +169,7 @@ export interface ExtendedEnglishWord {
     translation_state?: number,
     // Time is in the UTC format, see User for comment on time validation
     created_at: string,
-    edited_at: string,
+    edited_at?: string,
     translation_comment?: string,
     edited_by_id?: number,
     edited_by_name?: string,
@@ -184,7 +184,7 @@ const extendedEnglishWordSchema: JSONSchemaType<ExtendedEnglishWord> = {
         translation_state: { type: "number", nullable: true },
         // Time is in the UTC format, see User for comment on time validation
         created_at: { type: "string" },
-        edited_at: { type: "string" },
+        edited_at: { type: "string", nullable: true },
         translation_comment: { type: "string", nullable: true },
         edited_by_id: { type: "number", nullable: true },
         edited_by_name: { type: "string", nullable: true },
@@ -194,8 +194,7 @@ const extendedEnglishWordSchema: JSONSchemaType<ExtendedEnglishWord> = {
     },
     required: [
         "word", "description", "id",
-        "created_at", "edited_at",
-        "categories",
+        "created_at", "categories",
     ],
 };
 export const validateExtendedEnglishWordSchema = ajv.compile(extendedEnglishWordSchema);
