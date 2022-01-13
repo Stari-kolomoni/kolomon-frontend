@@ -27,6 +27,10 @@ $horizontal-margin: 6px;
 
     &--left {
         @include common.flex-row-center(false, true);
+
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
     }
 }
 

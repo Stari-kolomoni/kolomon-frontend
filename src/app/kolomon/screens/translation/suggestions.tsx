@@ -3,16 +3,15 @@ import { Suggestion } from "../../../core/api/validation";
 
 interface WordSuggestionsProps {
     suggestions: Suggestion[],
-    language: "english" | "slovene",
 }
 interface WordSuggestionsState {}
 
 class WordSuggestions extends Component<WordSuggestionsProps, WordSuggestionsState> {
     render() {
-        const { suggestions, language } = this.props;
+        const { suggestions } = this.props;
 
         return (
-            <div className={`word-suggestions ${language}`}>
+            <div className="word-suggestions slovene">
                 {suggestions.map((suggestion) => (
                     <span
                         key={suggestion.id}

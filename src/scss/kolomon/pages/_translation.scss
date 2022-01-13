@@ -65,6 +65,35 @@
 /*
  * COMMON RELATED STYLES
  */
+// Base styles that are extended in specific styles
+%base-listed-word-style {
+    margin: 2px 5px;
+
+    font-family: typography.$font-family-secondary;
+    font-size: typography.$font-size-body-text;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
+
+%slovene-word {
+    color: vars.$primary-even-darker;
+    text-decoration: underline transparentize(vars.$primary-dark, 0.7);
+}
+%slovene-word-hover {
+    color: vars.$primary-dark;
+    text-decoration: underline transparentize(vars.$primary-dark, 0.2);
+}
+
+%english-word {
+    color: vars.$secondary-even-darker;
+    text-decoration: underline transparentize(vars.$secondary-dark, 0.7);
+}
+%english-word-hover {
+    color: vars.$secondary-dark;
+    text-decoration: underline transparentize(vars.$secondary-dark, 0.2);
+}
+
+// Word links (each entry has an icon, a title and a domain)
 .word-links {
     margin-top: 6px;
 
@@ -107,17 +136,12 @@
     }
 }
 
+// Word suggestions (each suggestion has a word and related metadata)
 .word-suggestions {
     margin-top: 6px;
 
     .suggestion {
-        margin: 2px 5px;
-
-        font-family: typography.$font-family-secondary;
-        font-size: typography.$font-size-body-text;
-        font-weight: 700;
-        letter-spacing: -0.8px;
-
+        @extend %base-listed-word-style;
 
         transition: .2s ease;
         cursor: pointer;
@@ -126,12 +150,32 @@
 
 .word-suggestions.slovene {
     .suggestion {
-        color: vars.$primary-even-darker;
-        text-decoration: underline transparentize(vars.$primary-dark, 0.7);
+        @extend %slovene-word;
 
         &:hover {
-            color: vars.$primary-dark;
-            text-decoration: underline transparentize(vars.$primary-dark, 0.2);
+            @extend %slovene-word-hover;
+        }
+    }
+}
+
+// Related words (each word has a name)
+.word-related {
+    margin-top: 6px;
+
+    .related {
+        @extend %base-listed-word-style;
+
+        transition: .2s ease;
+        cursor: pointer;
+    }
+}
+
+.word-related.english {
+    .related {
+        @extend %english-word;
+
+        &:hover {
+            @extend %english-word-hover;
         }
     }
 }

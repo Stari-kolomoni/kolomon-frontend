@@ -3,7 +3,7 @@ import Logger, { Colour } from "../logger";
 import {
     Category,
     DetailResponse,
-    ExtendedEnglishWord, Link,
+    ExtendedEnglishWord, Link, RelatedWord,
     SimpleEnglishWord, SloveneWord,
     Suggestion,
     User,
@@ -16,7 +16,7 @@ import {
     validateExtendedEnglishWordSchema,
     validateLinkArraySchema,
     validateLinkSchema,
-    validatePingResponseSchema,
+    validatePingResponseSchema, validateRelatedWordArraySchema,
     validateSimpleEnglishWordArraySchema,
     validateSimpleEnglishWordSchema, validateSloveneWordSchema,
     validateSuggestionArraySchema,
@@ -629,6 +629,18 @@ export default class KolomonApi {
      * RELATED (get all for english word, create, delete one)
      */
     // TODO
+    static async getAllEnglishWordRelatedWords(id: number): Promise<RelatedWord[]> {
+        const [_response, json] = await request(
+            constructUrl(`/lex/english/${id}/related`),
+            "GET", true,
+        );
+
+        if (!validateRelatedWordArraySchema(json)) {
+            throw new Error("getAllEnglishWordRelatedWords: Failed to validate RelatedWordArray");
+        }
+
+        return json;
+    }
 
     /*
      * SLOVENE ENTRIES (get all, create, get one, delete one, modify one)

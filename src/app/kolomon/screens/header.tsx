@@ -5,6 +5,7 @@ import { RootState } from "../../store";
 import KolomonIconSVG from "../../../assets/kolomon-icon-v3.svg";
 import { clearGlobalBearerToken } from "../../core/api/requests";
 import Logger, { Colour } from "../../core/logger";
+import { withNavigation, WithNavigationProp } from "../utilities";
 
 const log = new Logger("header", Colour.MYRTLE_GREEN);
 
@@ -15,7 +16,7 @@ const mapDispatch = {};
 const connector = connect(mapState, mapDispatch);
 type HeaderPropsFromRedux = ConnectedProps<typeof connector>;
 
-interface HeaderProps extends HeaderPropsFromRedux {}
+interface HeaderProps extends HeaderPropsFromRedux, WithNavigationProp {}
 
 interface HeaderState {}
 
@@ -29,19 +30,28 @@ class Header extends Component<HeaderProps, HeaderState> {
         }
     };
 
+    navigateToHomePage = (): void => {
+        const { navigate } = this.props;
+        navigate("/home");
+    };
+
     render() {
         const { user } = this.props;
 
         return (
             <div className="header">
                 {/* Left-aligned part */}
-                <div className="header__block header__block--left">
+                <button
+                    className="header__block header__block--left"
+                    onClick={this.navigateToHomePage}
+                    type="button"
+                >
                     <div
                         id="header-icon"
                         dangerouslySetInnerHTML={{ __html: KolomonIconSVG }}
                     />
                     <div id="kolomon-title">Kolomon</div>
-                </div>
+                </button>
 
                 {/* TODO Search bar */}
 
@@ -72,4 +82,4 @@ class Header extends Component<HeaderProps, HeaderState> {
     }
 }
 
-export default connector(Header);
+export default withNavigation(connector(Header));

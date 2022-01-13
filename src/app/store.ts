@@ -8,6 +8,8 @@ export const store = configureStore({
         login: loginReducer,
         translation: translationReducer,
     },
+    devTools: !IS_PRODUCTION,
+
 });
 
 export type RootState = ReturnType<typeof store.getState>;

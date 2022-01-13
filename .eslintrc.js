@@ -21,6 +21,7 @@ module.exports = {
         "prefer-const": ["error", { destructuring: "all" }],
         "no-multiple-empty-lines": ["error", { max: 5, maxEOF: 1}],
         "operator-linebreak": ["warn", "before"],
+        "no-underscore-dangle": "off",
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", "first"],
         "react/prefer-stateless-function": "warn",

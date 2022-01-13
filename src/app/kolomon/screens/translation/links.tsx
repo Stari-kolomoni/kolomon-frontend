@@ -93,7 +93,7 @@ class WordLinks extends Component<WorkLinksProps, WorkLinksState> {
                     >
                         <span
                             className="link-icon"
-                            dangerouslySetInnerHTML={{__html: getDomainIcon(extractDomainFromURL(link.url)) || "" }}
+                            dangerouslySetInnerHTML={{ __html: getDomainIcon(extractDomainFromURL(link.url)) || "" }}
                         />
                         <span className="link-title">
                             {truncateLongString(link.title, 40, true)}
