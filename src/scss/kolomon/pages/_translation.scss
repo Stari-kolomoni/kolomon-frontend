@@ -6,16 +6,21 @@
     margin-top: 25px;
 }
 
+// Contains the english and slovene word and a horizontal separator
+.translation-container {
+    min-width: 650px;
+    max-width: 1050px;
+    min-height: 500px;
+}
+
 /*
  * WORD BASE
  */
 .word {
     display: grid;
 
-    min-width: 750px;
-    max-width: 80%;
-    min-height: 500px;
-    margin: 15px;
+    width: 100%;
+    margin: 25px 14px;
 
     h5 {
         margin: 2px 6px;
@@ -37,7 +42,10 @@
         font-size: typography.$font-size-larger-body-text;
         font-weight: 500;
 
-        text-indent: 1.5rem;
+        text-indent: 1rem;
+
+        padding: 6px 14px 4px 0;
+        margin-bottom: 10px;
     }
 
     // Second column
@@ -51,6 +59,8 @@
         grid-template-areas:
             "."
             "links";
+
+        margin-bottom: 10px;
 
         .word-links-inner-container {
             grid-area: links;
@@ -70,7 +80,7 @@
     margin: 2px 5px;
 
     font-family: typography.$font-family-secondary;
-    font-size: typography.$font-size-body-text;
+    font-size: typography.$font-size-larger-body-text;
     font-weight: 700;
     letter-spacing: -0.8px;
 }
@@ -95,7 +105,7 @@
 
 // Word links (each entry has an icon, a title and a domain)
 .word-links {
-    margin-top: 6px;
+    margin: 6px 0;
 
     .link {
         display: grid;
@@ -104,12 +114,24 @@
         grid-template-areas:
             "icon title"
             "icon domain";
-        margin: 3px 6px;
+
+        padding: 5px 6px;
+        border-radius: 3px;
 
         font-family: typography.$font-family-secondary;
         font-size: typography.$font-size-body-text;
         font-weight: 500;
         text-decoration: none;
+
+        background-color: transparent;
+        box-shadow: 0 1px 2px 0 transparent;
+
+        transition: .3s ease;
+
+        &:hover {
+            background-color: transparentize(vars.$header-background-darker, 0.7);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        }
     }
 
     .link-icon {

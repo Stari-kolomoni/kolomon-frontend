@@ -42,7 +42,7 @@ class EnglishWordDisplay extends Component<EnglishWordProps, EnglishWordState> {
                 </div>
                 <div className="word-state-container">
                     <h5>Stanje</h5>
-                    <span className="word-state">opis stanja</span>
+                    <span className="word-state" />
                 </div>
                 <div className="word-last-edit">
                     Nazadnje urejeno: {word.edited_at.toString()}

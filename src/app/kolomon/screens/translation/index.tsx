@@ -59,7 +59,7 @@ class WordDisplayScreen
     loadAllData() {
         const { params, dispatchFetchCompleteTranslation } = this.props;
         const englishWordIDFromURLParam = parseInt(params?.wordId || "-1", 10);
-        
+
         dispatchFetchCompleteTranslation(englishWordIDFromURLParam);
         this.setState(
             produce((previousState: WordDisplayScreenState) => {
@@ -75,7 +75,17 @@ class WordDisplayScreen
 
         // Final check before rendering.
         if (!english || !slovene) {
-            return <span>Loading translation...</span>;
+            return (
+                <BaseScreen className="page-translation" showHeader>
+                    <CenteringContainer>
+                        <div className="translation-container">
+                            <span>Loading...</span>
+                            <hr />
+                            <span>Loading...</span>
+                        </div>
+                    </CenteringContainer>
+                </BaseScreen>
+            );
         }
 
         const {
@@ -91,20 +101,18 @@ class WordDisplayScreen
 
         return (
             <BaseScreen className="page-translation" showHeader>
-                <span>
-                    <CenteringContainer>
+                <CenteringContainer>
+                    <div className="translation-container">
                         <EnglishWordDisplay
                             word={englishWord}
                             links={englishLinks}
                             suggestions={englishSuggestions}
                             related={englishRelated}
                         />
-                    </CenteringContainer>
-                    <hr />
-                    <CenteringContainer>
+                        <hr />
                         <SloveneWordDisplay word={sloveneWord} />
-                    </CenteringContainer>
-                </span>
+                    </div>
+                </CenteringContainer>
             </BaseScreen>
         );
     }
