@@ -1,4 +1,4 @@
-import { request } from "./requests";
+import { getGlobalBearerToken, request } from "./requests";
 import Logger, { Colour } from "../logger";
 import {
     Category,
@@ -49,7 +49,7 @@ export default class KolomonApi {
      */
     static async getAllUsers(page = 0): Promise<User[]> {
         const [_response, json] = await request(
-            constructUrl("/users/"), "GET", true,
+            constructUrl("/v1/users/"), "GET", true,
             { page }, "url",
         );
 
@@ -74,7 +74,7 @@ export default class KolomonApi {
         permissions = 0,
     ): Promise<User> {
         const [_response, json] = await request(
-            constructUrl("/users/"), "POST", true,
+            constructUrl("/v1/users/"), "POST", true,
             { username, password, permissions }, "json",
         );
 
@@ -91,7 +91,7 @@ export default class KolomonApi {
      */
     static async getLoggedInUser(): Promise<User> {
         const [_response, json] = await request(
-            constructUrl("/users/me"), "GET", true,
+            constructUrl("/v1/users/me"), "GET", true,
         );
 
         if (!validateUserSchema(json)) {
@@ -108,7 +108,7 @@ export default class KolomonApi {
      */
     static async getUser(id: number): Promise<User> {
         const [_response, json] = await request(
-            constructUrl(`/users/${id}`), "GET", true,
+            constructUrl(`/v1/users/${id}`), "GET", true,
         );
 
         if (!validateUserSchema(json)) {
@@ -126,7 +126,7 @@ export default class KolomonApi {
     // TODO change to Promise<bool>
     static async deleteUser(id: number): Promise<DetailResponse> {
         const [_response, json] = await request(
-            constructUrl(`/users/${id}`), "DELETE", true,
+            constructUrl(`/v1/users/${id}`), "DELETE", true,
         );
 
         if (!validateUserDeletedSchema(json)) {
@@ -159,7 +159,7 @@ export default class KolomonApi {
         }
 
         const [_response, json] = await request(
-            constructUrl(`/users/${id}`), "DELETE", true,
+            constructUrl(`/v1/users/${id}`), "DELETE", true,
             jsonData, "json",
         );
 
@@ -184,7 +184,7 @@ export default class KolomonApi {
      */
     static async getAllCategories(page = 0): Promise<Category[]> {
         const [_response, json] = await request(
-            constructUrl("/lex/categories/"), "GET", true,
+            constructUrl("/v1/lex/categories/"), "GET", true,
             { page }, "json",
         );
 
@@ -204,7 +204,7 @@ export default class KolomonApi {
      */
     static async createCategory(name: string, description: string): Promise<Category> {
         const [_response, json] = await request(
-            constructUrl("/lex/categories/"), "POST", true,
+            constructUrl("/v1/lex/categories/"), "POST", true,
             { name, description }, "json",
         );
 
@@ -222,7 +222,7 @@ export default class KolomonApi {
      */
     static async getCategory(id: number): Promise<Category> {
         const [_response, json] = await request(
-            constructUrl(`/lex/categories/${id}`), "POST", true,
+            constructUrl(`/v1/lex/categories/${id}`), "POST", true,
         );
 
         if (!validateCategorySchema(json)) {
@@ -239,7 +239,7 @@ export default class KolomonApi {
      */
     static async deleteCategory(id: number): Promise<DetailResponse> {
         const [_response, json] = await request(
-            constructUrl(`/lex/categories/${id}`), "DELETE", true,
+            constructUrl(`/v1/lex/categories/${id}`), "DELETE", true,
         );
 
         if (!validateCategoryDeletedSchema(json)) {
@@ -270,7 +270,7 @@ export default class KolomonApi {
         }
 
         const [_response, json] = await request(
-            constructUrl(`/lex/categories/${id}`), "PATCH", true,
+            constructUrl(`/v1/lex/categories/${id}`), "PATCH", true,
             jsonData, "json",
         );
 
@@ -294,7 +294,7 @@ export default class KolomonApi {
      */
     static async getAllEnglishWords(page = 0): Promise<SimpleEnglishWord[]> {
         const [_response, json] = await request(
-            constructUrl("/lex/english/"), "GET", true,
+            constructUrl("/v1/lex/english/"), "GET", true,
             { page }, "url",
         );
 
@@ -316,7 +316,7 @@ export default class KolomonApi {
         word: string, description: string,
     ): Promise<SimpleEnglishWord> {
         const [_response, json] = await request(
-            constructUrl("/lex/english/"), "POST", true,
+            constructUrl("/v1/lex/english/"), "POST", true,
             { word, description }, "json",
         );
 
@@ -334,7 +334,7 @@ export default class KolomonApi {
      */
     static async getEnglishWord(id: number): Promise<ExtendedEnglishWord> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${id}`), "GET", true,
+            constructUrl(`/v1/lex/english/${id}`), "GET", true,
         );
 
         if (!validateExtendedEnglishWordSchema(json)) {
@@ -351,7 +351,7 @@ export default class KolomonApi {
      */
     static async deleteEnglishWord(id: number): Promise<DetailResponse> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${id}`), "DELETE", true,
+            constructUrl(`/v1/lex/english/${id}`), "DELETE", true,
         );
 
         if (!validateEnglishWordDeletedSchema(json)) {
@@ -381,7 +381,7 @@ export default class KolomonApi {
         }
 
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${id}`), "PATCH", true,
+            constructUrl(`/v1/lex/english/${id}`), "PATCH", true,
             jsonData, "json",
         );
 
@@ -408,7 +408,7 @@ export default class KolomonApi {
         wordID: number, page = 0,
     ): Promise<Suggestion[]> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/suggestions/`), "GET", true,
+            constructUrl(`/v1/lex/english/${wordID}/suggestions/`), "GET", true,
             { page }, "url",
         );
 
@@ -435,7 +435,7 @@ export default class KolomonApi {
         comment: string, separateGenderForm: boolean,
     ): Promise<Suggestion> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/suggestions/`), "POST", true,
+            constructUrl(`/v1/lex/english/${wordID}/suggestions/`), "POST", true,
             { suggestion, comment, separate_gender_form: separateGenderForm }, "json",
         );
 
@@ -458,7 +458,7 @@ export default class KolomonApi {
         wordID: number, suggestionID: number,
     ): Promise<Suggestion> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/suggestions/${suggestionID}`),
+            constructUrl(`/v1/lex/english/${wordID}/suggestions/${suggestionID}`),
             "GET", true,
         );
 
@@ -480,7 +480,7 @@ export default class KolomonApi {
         wordID: number, suggestionID: number,
     ): Promise<DetailResponse> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/suggestions/${suggestionID}`),
+            constructUrl(`/v1/lex/english/${wordID}/suggestions/${suggestionID}`),
             "DELETE", true,
         );
 
@@ -514,7 +514,7 @@ export default class KolomonApi {
         }
 
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/suggestions/${suggestionID}`),
+            constructUrl(`/v1/lex/english/${wordID}/suggestions/${suggestionID}`),
             "PATCH", true,
             jsonData, "json",
         );
@@ -540,7 +540,7 @@ export default class KolomonApi {
      */
     static async getAllEnglishWordLinks(wordID: number, page = 0): Promise<Link[]> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/links/`),
+            constructUrl(`/v1/lex/english/${wordID}/links/`),
             "GET", true,
             { page }, "url",
         );
@@ -564,7 +564,7 @@ export default class KolomonApi {
         url: string,
     ): Promise<Link> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/links/`),
+            constructUrl(`/v1/lex/english/${wordID}/links/`),
             "POST", true,
             { title, url }, "json",
         );
@@ -587,7 +587,7 @@ export default class KolomonApi {
         wordID: number, linkID: number,
     ): Promise<Link | null> {
         const [response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/links/${linkID}/`),
+            constructUrl(`/v1/lex/english/${wordID}/links/${linkID}/`),
             "GET", true,
         );
 
@@ -612,7 +612,7 @@ export default class KolomonApi {
         wordID: number, linkID: number,
     ): Promise<DetailResponse> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${wordID}/links/${linkID}/`),
+            constructUrl(`/v1/lex/english/${wordID}/links/${linkID}/`),
             "DELETE", true,
         );
 
@@ -631,7 +631,7 @@ export default class KolomonApi {
     // TODO
     static async getAllEnglishWordRelatedWords(id: number): Promise<RelatedWord[]> {
         const [_response, json] = await request(
-            constructUrl(`/lex/english/${id}/related`),
+            constructUrl(`/v1/lex/english/${id}/related`),
             "GET", true,
         );
 
@@ -653,7 +653,7 @@ export default class KolomonApi {
      */
     static async getSloveneWord(id: number): Promise<SloveneWord> {
         const [_response, json] = await request(
-            constructUrl(`/lex/slovene/${id}`), "GET", true,
+            constructUrl(`/v1/lex/slovene/${id}`), "GET", true,
         );
 
         if (!validateSloveneWordSchema(json)) {
@@ -674,7 +674,7 @@ export default class KolomonApi {
      */
     static async getEnglishWordTranslation(englishID: number): Promise<SloveneWord | null> {
         const [response, json] = await request(
-            constructUrl(`/lex/english/${englishID}/translation`), "GET", true,
+            constructUrl(`/v1/lex/english/${englishID}/translation`), "GET", true,
         );
 
         if (response.status === 404) {
@@ -717,15 +717,15 @@ export default class KolomonApi {
      * Verifies that the user is logged in.
      */
     static async checkIfProperlyLoggedIn(): Promise<boolean> {
-        const [_response, json] = await request(
-            constructUrl("/check"), "GET", true,
-        );
-
-        if (!validateCheckResponseSchema(json)) {
-            throw new Error("checkIfProperlyLoggedIn: failed to validate TokenResponse");
+        if (getGlobalBearerToken() == null) {
+            return false;
         }
 
-        return json.message === "You are authorized.";
+        const [response, _] = await request(
+            constructUrl("/v1/users/me"), "GET", true,
+        );
+
+        return response.status === 200;
     }
 
     /**
@@ -740,7 +740,7 @@ export default class KolomonApi {
         username: string, password: string,
     ): Promise<string | null> {
         const [response, json] = await request(
-            constructUrl("/token"), "POST", true,
+            constructUrl("/v1/users/token"), "POST", true,
             { username, password }, "form",
         );
 

@@ -42,25 +42,27 @@ export const validateDetailResponseSchema = ajv.compile(detailResponseSchema);
 // PATCH /users/{user_id}
 export interface User {
     username: string,
+    display_name: string | null,
     id: number,
-    permissions: number,
+    is_active: boolean,
     // Time is in the UTC format
     // TODO add validator for that as well (https://ajv.js.org/json-schema.html#format)
     joined: string,
+    modified: string | null,
     last_active: string,
-    is_active: boolean,
 }
 const userSchema: JSONSchemaType<User> = {
     type: "object",
     properties: {
         username: { type: "string" },
+        display_name: { type: "string", nullable: true },
         id: { type: "number" },
-        permissions: { type: "number" },
-        joined: { type: "string" },
-        last_active: { type: "string" },
         is_active: { type: "boolean" },
+        joined: { type: "string" },
+        modified: { type: "string", nullable: true },
+        last_active: { type: "string" },
     },
-    required: ["username", "id", "permissions", "last_active", "is_active"],
+    required: ["username", "id", "last_active", "is_active"],
 };
 export const validateUserSchema = ajv.compile(userSchema);
 
@@ -425,6 +427,7 @@ const tokenResponseSchema: JSONSchemaType<TokenResponse> = {
         token_type: { type: "string" },
     },
     required: ["access_token", "token_type"],
+    additionalProperties: false,
 };
 export const validateTokenResponseSchema = ajv.compile(tokenResponseSchema);
 
