@@ -56,9 +56,8 @@ module.exports = {
                     {
                         loader: "sass-loader",
                         options: {
-                            implementation: require("dart-sass"),
+                            implementation: require("sass"),
                             sassOptions: {
-                                fiber: require("fibers"),
                                 sourceMap: !mainConfig.isProductionEnv,
                                 outputStyle: mainConfig.isProductionEnv ? "compressed" : "expanded",
                             }
