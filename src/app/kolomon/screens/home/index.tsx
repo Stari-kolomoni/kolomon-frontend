@@ -118,6 +118,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                                 content={word.word}
                                 type="button"
                                 className="km-button km-button--primary"
+                                key={word.id}
                                 onClick={
                                     () => this.redirectToEnglishWord(word.id)
                                 }

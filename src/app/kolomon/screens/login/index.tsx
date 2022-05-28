@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import { RootState } from "../../../store";
 import Logger, { Colour } from "../../../core/logger";
 import KolomonApi from "../../../core/api";
-import { setGlobalBearerToken } from "../../../core/api/requests";
+import { clearGlobalBearerToken, setGlobalBearerToken } from "../../../core/api/requests";
 
 import { Button } from "../../components/button";
 import { Form, FormTextInput } from "../../components/form";
@@ -73,6 +73,7 @@ class LoginScreen extends Component<LoginScreenProps, LoginScreenState> {
         const loggedIn = await KolomonApi.checkIfProperlyLoggedIn();
         if (!loggedIn) {
             log.error("Got token, but invalid login?!");
+            clearGlobalBearerToken();
             return;
         }
 

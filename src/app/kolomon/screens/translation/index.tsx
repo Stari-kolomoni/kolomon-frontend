@@ -1,5 +1,6 @@
 import React, { Component, ReactElement } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { Params } from "react-router-dom";
 
 import { RootState } from "../../../store";
 import { withParams, WithParamsProp } from "../../utilities";
@@ -11,8 +12,6 @@ import {
 import Logger, { Colour } from "../../../core/logger";
 import BaseScreen from "../baseScreen";
 import { CenteringContainer } from "../../components/container";
-import produce from "immer";
-import { Params } from "react-router-dom";
 
 const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 

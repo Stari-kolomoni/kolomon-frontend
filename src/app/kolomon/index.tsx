@@ -12,6 +12,7 @@ import LoginScreen from "./screens/login";
 import HomeScreen from "./screens/home";
 import { logIn, LoginState } from "./screens/login/loginSlice";
 import WordDisplayScreen from "./screens/translation";
+import { clearGlobalBearerToken } from "../core/api/requests";
 
 const log = new Logger("kolomonapp", Colour.BITTER_LIME);
 
@@ -61,7 +62,7 @@ class KolomonApp extends Component<KolomonAppProps, KolomonAppState> {
                 dispatchLogIn(userInfo);
             } else {
                 log.info("Invalid token, user will have to log in again.");
-                authStorage.delete("oauth2-bearer");
+                clearGlobalBearerToken();
             }
         }
 

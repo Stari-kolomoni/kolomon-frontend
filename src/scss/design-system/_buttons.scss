@@ -2,6 +2,7 @@
  * Kolomon Design System: buttons
  * This partial contains button styles.
  */
+@use "sass:math";
 @use "../vars" as var;
 @use "./typography" as typography;
 @use "../modules/animations" as anim;
@@ -27,7 +28,7 @@ $button-focus-outline: 4px;
 $button-default-hover-background: darken(var.$button-default-background, 5%);
 
 // These values are calculated automatically
-$button-focus-border-width: $button-focus-outline / 2;
+$button-focus-border-width: math.div($button-focus-outline, 2);
 $button-focus-outer-offset: -1 * $button-focus-outline;
 
 // This mixin will generate a set of css rules that will make the button react to being focused
