@@ -27,7 +27,6 @@ module.exports = {
         "react/prefer-stateless-function": "warn",
         "react/jsx-max-props-per-line": ["warn", { maximum: 2, when: "multiline" }],
         "react/prop-types": "off",
-        "react/jsx-one-expression-per-line": "off",
         "react/jsx-props-no-spreading": "off",
         "react/no-danger": "off",
         "@typescript-eslint/indent": "off",
@@ -50,6 +49,7 @@ module.exports = {
             },
         ],
         "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
     },
     overrides: [
         {

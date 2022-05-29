@@ -1,6 +1,6 @@
 {
   "name": "kolomon-frontend",
-  "title": "A english-to-slovenian D&D translation and dictionary tool.",
+  "title": "Frontend for Stari Kolomoni, a Slovenian fantasy dictionary project.",
   "author": "DefaultSimon, Grimpy101",
   "url": "https://github.com/Stari-kolomoni",
   "version": "0.1.0",
