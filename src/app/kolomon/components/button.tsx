@@ -9,6 +9,16 @@ interface ButtonProps {
     onClick?: MouseEventHandler<HTMLButtonElement>,
 }
 
+/**
+ * Create a new Button.
+ *
+ * @param content Button text.
+ * @param type Button type (submit, reset or button).
+ * @param className Any additional CSS classes to apply.
+ * @param onClick On click event handler to add to the button.
+ * @param id ID of the button.
+ * @constructor
+ */
 const Button = ({
     content, type, className, onClick, id,
 }: ButtonProps): JSX.Element => (

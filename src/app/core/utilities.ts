@@ -1,6 +1,9 @@
 /**
- * Join a list of css class names into a className string.
- * @returns A string.
+ * Join a list of CSS class names into a className string.
+ *
+ * @param params A list of parameters to join. This method performs cleanup before concatenating
+ *        (meaning it filters out null and undefined values).
+ * @returns A string with joined CSS classes.
  */
 // eslint-disable-next-line import/prefer-default-export
 export const getClassNameString = (...params: (string | null | undefined)[]): string => {

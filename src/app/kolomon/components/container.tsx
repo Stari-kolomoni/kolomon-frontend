@@ -9,7 +9,12 @@ interface ContainerProps {
 }
 
 /**
- * A normal item container. Just some padding.
+ * Create a new ("normal") item container, which is just some padding.
+ *
+ * @param className Any additional CSS classes to apply.
+ * @param children Automatically passed children components.
+ * @param containerType Container type (normal or narrow), dictates the amount of padding.
+ * @constructor
  */
 const Container = (
     { className, children, containerType }: ContainerProps,
@@ -40,6 +45,15 @@ interface ElevatedContainerProps {
  * An "elevated" item container.
  * Slightly rounded counter with a slightly lighter background colour, implying elevation.
  */
+
+/**
+ * Create a new ("elevated") item container.
+ * Slightly rounded corners with a slightly lighter background colour, implying surface elevation.
+ *
+ * @param className Additional CSS classes to apply.
+ * @param children Automatically passed children components.
+ * @constructor
+ */
 const ElevatedContainer = (
     { className, children }: ElevatedContainerProps,
 ): JSX.Element => (
@@ -59,7 +73,11 @@ interface CenteringFullWidthContainerProps {
 }
 
 /**
- * A full-width flex container that vertically centers all its children.
+ * Create a new full-width flex container that vertically centers all of its children.
+ *
+ * @param className Additional CSS classes to apply.
+ * @param children Automatically passed children components.
+ * @constructor
  */
 const CenteringContainer = (
     { className, children }: CenteringFullWidthContainerProps,

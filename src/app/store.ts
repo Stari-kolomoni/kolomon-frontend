@@ -9,7 +9,6 @@ export const store = configureStore({
         translation: translationReducer,
     },
     devTools: !IS_PRODUCTION,
-
 });
 
 export type RootState = ReturnType<typeof store.getState>;

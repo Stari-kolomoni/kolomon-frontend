@@ -32,6 +32,11 @@ const setGlobalBearerToken = (token: string): void => {
 };
 
 /**
+ * Check whether we have an OAuth2 bearer token in storage.
+ */
+const globalBearerTokenExists = (): boolean => authStorage.exists("oauth2-bearer");
+
+/**
  * Clear the OAuth2 bearer token from storage.
  */
 const clearGlobalBearerToken = (): boolean => authStorage.delete("oauth2-bearer");
@@ -114,6 +119,7 @@ const request = async (
 
 export {
     JSONObject,
-    getGlobalBearerToken, setGlobalBearerToken, clearGlobalBearerToken,
+    getGlobalBearerToken, setGlobalBearerToken,
+    globalBearerTokenExists, clearGlobalBearerToken,
     authStorage, request,
 };

@@ -12,10 +12,11 @@ export default class KolomonStorage {
 
     /**
      * Initialize a new KolomonStorage.
+     *
+     * @constructor
      * @param type - which Storage API to use. Will throw an Error if the requested API is not available in the browser.
      * @param prefix - The prefix to use for this specific instance of the StorageManager.
-     * Prefixing makes sure two instances cannot collide (if they have a different prefix).
-     * @constructor
+     *        Prefixing makes sure two instances cannot collide (if they have a different prefix).
      */
     constructor(type: "session" | "local", prefix: string) {
         this.domain = prefix;
@@ -31,6 +32,7 @@ export default class KolomonStorage {
     /**
      * This method will merge the KolomonStorage prefix with the actual key.
      * This kind of prefixing ensures that two instances of storage with a different prefix cannot collide.
+     *
      * @param key - Key to merge.
      * @returns A new key that includes the prefix.
      * @private
@@ -41,6 +43,7 @@ export default class KolomonStorage {
 
     /**
      * Return the value at the key.
+     *
      * @param key - Key to fetch the value for.
      * @returns The value at the key, null if empty.
      */
@@ -50,6 +53,7 @@ export default class KolomonStorage {
 
     /**
      * Set the value at a specific key.
+     *
      * @param key - Key to set the value at.
      * @param value - Value to set.
      */
@@ -59,6 +63,7 @@ export default class KolomonStorage {
 
     /**
      * Check whether there is a non-null value at the specified key.
+     *
      * @param key - Key to check.
      */
     exists(key: string): boolean {
@@ -67,6 +72,7 @@ export default class KolomonStorage {
 
     /**
      * If a key exists in the storage, deletes it and returns true.
+     *
      * @param key - Key to delete.
      */
     delete(key: string): boolean {

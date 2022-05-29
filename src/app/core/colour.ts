@@ -1,4 +1,4 @@
-/*
+/**
  * A set of useful console colours and associated conversion functions.
  */
 
@@ -40,8 +40,9 @@ enum Colour {
 
 /**
  * Converts a hexadecimal "#colour" to corresponding RGB values.
+ *
  * @param hexValue - hexadecimal representation of the colour.
- *              Allowed formats: `#fff`, `#ffffff` or any of those without leading `#`
+ *        Allowed formats: `#fff`, `#ffffff` or any of those without leading `#`
  * @returns an array containing three values: red, green and blue value of the colour.
  */
 const hexToRGB = (hexValue: string): number[] => {
@@ -68,7 +69,9 @@ const hexToRGB = (hexValue: string): number[] => {
 };
 
 /**
- * Converts RGB values to HSL. See: https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+ * Converts RGB values to HSL.
+ * See: https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+ *
  * @param red - red value (0 - 255)
  * @param green - green value (0 - 255)
  * @param blue - blue value (0 - 255)

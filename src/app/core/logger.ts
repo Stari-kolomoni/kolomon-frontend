@@ -1,16 +1,18 @@
 /**
  * Enhanced logging module
  */
+
 import { Colour, hexToRGB, rgbToHSL } from "./colour";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LoggingObject = any;
 
 /*
- * Helper functions
+ * HELPER FUNCTIONS
  */
 /**
  * Pick a random colour out of the Colour enum (see colour.ts).
+ *
  * @returns A random Colour colour.
  */
 const generateRandomColour = (): Colour => {
@@ -23,6 +25,7 @@ const generateRandomColour = (): Colour => {
 /**
  * Checks whether the value is an Object.
  * With help from https://stackoverflow.com/questions/8511281/check-if-a-value-is-an-object-in-javascript and lodash.
+ *
  * @param value - Value to check.
  * @returns Boolean indicating whether the value is an object.
  */
@@ -32,6 +35,7 @@ const isObject = (
 
 /**
  * Compute a well-contrasted colour to the specified one.
+ *
  * @param hexColour - base (background) colour
  * @returns White or black hex code depending on which one is better-contrasted to `hexColour`.
  */
@@ -55,6 +59,7 @@ class Logger {
 
     /**
      * Construct a new Logger.
+     *
      * @constructor
      * @param name - Name for the Logger.
      * @param colour - Background colour (`Colour` or hex value) for this Logger.
@@ -73,6 +78,7 @@ class Logger {
 
     /**
      * Formats the content for console output.
+     *
      * @param content - Content to prepare for output to console.
      * @returns A list of argument to pass to `console.info/error/...`.
      */
@@ -98,6 +104,7 @@ class Logger {
 
     /**
      * Formats the content for console output, more specifically for group labels.
+     *
      * @param label - Group label to use.
      * @returns A list of argument to pass to `console.group`/`console.groupCollapsed`.
      */
@@ -119,6 +126,7 @@ class Logger {
      */
     /**
      * Log some content to console.
+     *
      * @param content - Content to output, can be an Object.
      */
     log = (content: LoggingObject): void => {
@@ -127,6 +135,7 @@ class Logger {
 
     /**
      * Log some content to console with severity `debug`.
+     *
      * @param content - Content to output, can be an Object.
      */
     debug = (content: LoggingObject): void => {
@@ -137,6 +146,7 @@ class Logger {
 
     /**
      * Log some content to console with severity `INFO`.
+     *
      * @param content - Content to output, can be an Object.
      */
     info = (content: LoggingObject): void => {
@@ -145,6 +155,7 @@ class Logger {
 
     /**
      * Log some content to console with severity `WARN`.
+     *
      * @param content - Content to output, can be an Object.
      */
     warn = (content: LoggingObject): void => {
@@ -153,6 +164,7 @@ class Logger {
 
     /**
      * Log some content to console with severity `ERROR`.
+     *
      * @param content - Content to output, can be an Object.
      */
     error = (content: LoggingObject): void => {
@@ -162,6 +174,7 @@ class Logger {
     /**
      * Creates a new group in the console. This indents messages by
      * an additional level, until `console.groupEnd()` is called.
+     *
      * @param label - Group label to use.
      */
     group = (label: LoggingObject): void => {
@@ -171,6 +184,7 @@ class Logger {
     /**
      * Creates a new group in the console. However, the group is initially collapsed.
      * This indents messages by an additional level, until `console.groupEnd()` is called.
+     *
      * @param label - Group label to use.
      */
     groupCollapsed = (label: LoggingObject): void => {
