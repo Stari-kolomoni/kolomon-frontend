@@ -2,6 +2,10 @@
     Stari Kolomoni (Frontend)
 </h1>
 
+<p align="center">
+    <sup>For visual design, see <a href="https://github.com/Stari-kolomoni/kolomon-designs">kolomon-designs</a> repository.</sup>
+</p>
+
 ---
 
 
