@@ -2,6 +2,7 @@
  * A set of Higher order components that wrap a React Component with an additional
  * prop for React Router navigation, parameters, etc.
  */
+
 import React, { ComponentType, FunctionComponent, ReactElement } from "react";
 import {
     NavigateFunction, Params, useNavigate, useParams,
@@ -11,20 +12,38 @@ export interface WithNavigationProp {
     navigate: NavigateFunction
 }
 
-// TODO fix types
+/**
+ * Wrap a component in the react-router-dom's useNavigate hook, passing the new navigation prop as "navigate".
+ *
+ * @param ComponentToWrap Component to wrap with navigation prop.
+ */
 export const withNavigation = <T extends WithNavigationProp>(
-    WrappedComponent: ComponentType<T>,
-): FunctionComponent<Omit<T, keyof WithNavigationProp>> => (
-    props: Omit<T, keyof WithNavigationProp>,
-): ReactElement => <WrappedComponent {...props} navigate={useNavigate()} />;
+    ComponentToWrap: ComponentType<T>,
+): FunctionComponent<Omit<T, keyof WithNavigationProp>> => {
+    return (
+        props: Omit<T, keyof WithNavigationProp>,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ): ReactElement => <ComponentToWrap {...props} navigate={useNavigate()} />;
+};
 
 
 export interface WithParamsProp {
     params: Readonly<Params>
 }
 
+/**
+ * Wrap a component in the react-router-com's useParams hook, passing the new params prop as "params".
+ *
+ * @param ComponentToWrap Component to wrap with params prop.
+ */
 export const withParams = <T extends WithParamsProp>(
-    WrappedComponent: ComponentType<T>,
-) => (
-    props: T,
-): ReactElement => <WrappedComponent {...props} params={useParams()} />;
+    ComponentToWrap: ComponentType<T>,
+): FunctionComponent<Omit<T, keyof WithParamsProp>> => {
+    return (
+        props: Omit<T, keyof WithParamsProp>,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ): ReactElement => <ComponentToWrap {...props} params={useParams()} />;
+};
+
