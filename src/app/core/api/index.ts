@@ -10,7 +10,6 @@ import {
     validateCategoryArraySchema,
     validateCategoryDeletedSchema,
     validateCategorySchema,
-    validateCheckResponseSchema,
     validateDeletedSuggestionSchema,
     validateEnglishWordDeletedSchema,
     validateExtendedEnglishWordSchema,
@@ -42,12 +41,17 @@ export default class KolomonApi {
      * USERS (get all, create, get self, get one, delete one, modify one)
      */
     /**
-     * API Endpoint: GET /users/
-     * Pings the backend and returns a boolean indicating the status.
+     * **API Endpoint: GET /v1/users/**
+     *
+     * Fetch a list of registered users.
+     * TODO Perhaps this shouldn't be exposed on the backend? Or at least locked away with admin roles. @Grimpy101
+     *
      * @param page - Page number to request. Automatic pagination is not implemented yet.
      * @returns An array containing user objects.
      */
-    static async getAllUsers(page = 0): Promise<User[]> {
+    static async getAllUsers(
+        page: number = 0,
+    ): Promise<User[]> {
         const [_response, json] = await request(
             constructUrl("/v1/users/"), "GET", true,
             { page }, "url",
