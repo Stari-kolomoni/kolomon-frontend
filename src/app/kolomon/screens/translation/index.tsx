@@ -7,7 +7,8 @@ import { withParams, WithParamsProp } from "../../utilities";
 import EnglishWordDisplay from "./englishWordDisplay";
 import SloveneWordDisplay from "./sloveneWordDisplay";
 import {
-    clearTranslationData, fetchCompleteTranslation,
+    clearTranslationData,
+    fetchCompleteTranslation,
 } from "./translationSlice";
 import Logger, { Colour } from "../../../core/logger";
 import BaseScreen from "../baseScreen";
@@ -15,26 +16,26 @@ import { CenteringContainer } from "../../components/container";
 
 const log = new Logger("wordDisplay", Colour.GOLD_FUSION);
 
-// Redux setup (mapStateToProps, mapDispatchToProps, connector)
+
 const mapState = (state: RootState) => ({
     ...state.translation,
 });
+
 const mapDispatch = {
     dispatchFetchCompleteTranslation: fetchCompleteTranslation,
     dispatchClearTranslationData: clearTranslationData,
 };
+
 const connector = connect(mapState, mapDispatch);
 type WordDisplayScreenPropsFromRedux = ConnectedProps<typeof connector>;
 
-// Prop & State setup (merge redux and own props)
-interface WordDisplayScreenProps
-    extends WordDisplayScreenPropsFromRedux, WithParamsProp {}
+
+interface WordDisplayScreenProps extends WordDisplayScreenPropsFromRedux, WithParamsProp {}
+
 interface WordDisplayScreenState {}
 
-// Component
-class WordDisplayScreen
-    extends Component<WordDisplayScreenProps, WordDisplayScreenState> {
 
+class WordDisplayScreen extends Component<WordDisplayScreenProps, WordDisplayScreenState> {
     componentDidMount() {
         // We call the logic for updating because componentDidUpdate
         // is not called after first render.

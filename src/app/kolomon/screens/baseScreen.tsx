@@ -4,29 +4,38 @@ import { clearGlobalBearerToken } from "../../core/api/requests";
 import Logger, { Colour } from "../../core/logger";
 import Header from "./header";
 
-const log = new Logger("base-screen", Colour.XIKETIC);
+const log = new Logger("baseScreen", Colour.XIKETIC);
+
 
 interface BasePageProps {
     children?: ReactNode,
     showHeader: boolean,
     className: string,
 }
+
 interface BasePageState {}
 
+/**
+ * Page abstraction (all pages/"screens" should be wrapped in this).
+ */
 class BaseScreen extends Component<BasePageProps, BasePageState> {
     placeholderLogOut = (): void => {
-        log.warn("Clearing token.");
-        const result = clearGlobalBearerToken();
-        if (result) {
+        log.info("Clearing token.");
+        const wasCleared = clearGlobalBearerToken();
+
+        if (wasCleared) {
             log.info("Cleared successfully!");
             window.location.reload();
+        } else {
+            log.warn("Couldn't clear the token, possibly wasn't set.");
         }
     };
 
     render(): ReactNode {
         const {
             children,
-            showHeader, className,
+            showHeader,
+            className,
         } = this.props;
 
         // Display the header only if showHeader prop is true.

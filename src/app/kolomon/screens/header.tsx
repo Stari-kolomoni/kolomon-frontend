@@ -9,21 +9,26 @@ import { withNavigation, WithNavigationProp } from "../utilities";
 
 const log = new Logger("header", Colour.MYRTLE_GREEN);
 
+
 const mapState = (state: RootState) => ({
     user: state.login.user,
 });
 const mapDispatch = {};
+
 const connector = connect(mapState, mapDispatch);
 type HeaderPropsFromRedux = ConnectedProps<typeof connector>;
+
 
 interface HeaderProps extends HeaderPropsFromRedux, WithNavigationProp {}
 
 interface HeaderState {}
 
+
 class Header extends Component<HeaderProps, HeaderState> {
     placeholderLogOut = (): void => {
         log.warn("Clearing token.");
         const result = clearGlobalBearerToken();
+
         if (result) {
             log.info("Cleared successfully!");
             window.location.reload();

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Suggestion } from "../../../core/api/validation";
 
+
 interface WordSuggestionsProps {
     suggestions: Suggestion[],
 }
 interface WordSuggestionsState {}
+
 
 class WordSuggestions extends Component<WordSuggestionsProps, WordSuggestionsState> {
     render() {

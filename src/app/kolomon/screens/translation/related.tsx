@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { RelatedWord } from "../../../core/api/validation";
 import { withNavigation, WithNavigationProp } from "../../utilities";
 
+
 interface WordRelatedProps extends WithNavigationProp {
     relatedWords: RelatedWord[],
     language: "slovene" | "english",
 }
 interface WordRelatedState {}
+
 
 class WordRelated extends Component<WordRelatedProps, WordRelatedState> {
     render() {
@@ -21,7 +23,7 @@ class WordRelated extends Component<WordRelatedProps, WordRelatedState> {
                         role="link"
                         tabIndex={0}
                         onClick={() => navigate(`/translation/${word.id}`)}
-                        onKeyPress={() => navigate(`/translation/${word.id}`)}
+                        onKeyDown={() => navigate(`/translation/${word.id}`)}
                     >
                         {word.word}
                     </span>

@@ -39,9 +39,10 @@ const domainIcons: DomainIconEntry[] = [
     },
 ];
 
+
 const getDomainIcon = (domain: string): string | null => {
     // Return first match from domainIcons.
-    const results = domainIcons.filter((entry) => {
+    const results = domainIcons.filter((entry: DomainIconEntry) => {
         return entry.regex.test(domain);
     });
 
@@ -51,6 +52,7 @@ const getDomainIcon = (domain: string): string | null => {
 
     return results[0].icon;
 };
+
 
 const truncateLongString = (
     text: string, maxLength = 40,
@@ -68,16 +70,19 @@ const truncateLongString = (
     return `${naiveClip}...`;
 };
 
+
 const extractDomainFromURL = (url: string): string => {
     const urlInstance = new URL(url);
     return urlInstance.hostname.replace("www", "");
 };
+
 
 interface WorkLinksProps {
     links: Link[],
 }
 
 interface WorkLinksState {}
+
 
 class WordLinks extends Component<WorkLinksProps, WorkLinksState> {
     render() {

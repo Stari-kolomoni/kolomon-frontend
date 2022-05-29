@@ -131,5 +131,4 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
     }
 }
 
-// export default connector(withNavigation(Home));
-export default withNavigation(HomeScreen);
+export default withNavigation(connector(HomeScreen));

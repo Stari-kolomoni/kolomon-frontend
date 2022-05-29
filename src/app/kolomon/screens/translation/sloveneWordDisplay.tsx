@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { SloveneWord } from "../../../core/api/validation";
 
+
 interface SloveneWordProps {
     word: SloveneWord
 }
 
 interface SloveneWordState {}
 
-// Component
+
 class SloveneWordDisplay extends Component<SloveneWordProps, SloveneWordState> {
     render() {
         const { word } = this.props;

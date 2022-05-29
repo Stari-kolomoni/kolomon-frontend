@@ -31,6 +31,7 @@ const initialWordDisplayState: ReduxWordDisplayState = {
     slovene: null,
 };
 
+
 /*
  * Fetching logic and thunks
  */
@@ -49,6 +50,7 @@ const _fetchCompleteEnglishWord = async (wordID: number) => {
     } as ReduxEnglishWordState;
 };
 
+
 const _fetchCompleteSloveneWord = async (englishWordID: number) => {
     const sloveneWord = await KolomonApi.getEnglishWordTranslation(englishWordID);
     if (sloveneWord === null) {
@@ -60,15 +62,18 @@ const _fetchCompleteSloveneWord = async (englishWordID: number) => {
     } as ReduxSloveneWordState;
 };
 
+
 export const fetchCompleteEnglishWord = createAsyncThunk(
     "translation/fetchCompleteEnglishWord",
     _fetchCompleteEnglishWord,
 );
 
+
 export const fetchCompleteSloveneWord = createAsyncThunk(
     "translation/fetchCompleteSloveneWord",
     _fetchCompleteSloveneWord,
 );
+
 
 export const fetchCompleteTranslation = createAsyncThunk(
     "translation/fetchCompleteTranslation",
@@ -84,6 +89,7 @@ export const fetchCompleteTranslation = createAsyncThunk(
         };
     },
 );
+
 
 /*
  * Slice
@@ -144,7 +150,6 @@ export const translationSlice = createSlice({
         );
     },
 });
-
 
 
 // All actions as one object

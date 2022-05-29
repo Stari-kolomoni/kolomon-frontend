@@ -15,17 +15,22 @@ import { H1 } from "../../components/text";
 import { logIn, LoginState as LoginSliceState } from "./loginSlice";
 import BaseScreen from "../baseScreen";
 
+
 const log = new Logger("login", Colour.DARK_PURPLE);
+
 
 const mapState = (state: RootState) => ({
     isLoggedIn: state.login.loginState,
     loggedInUser: state.login.user,
 });
+
 const mapDispatch = {
     dispatchLogIn: logIn,
 };
+
 const connector = connect(mapState, mapDispatch);
 type LoginScreenPropsFromRedux = ConnectedProps<typeof connector>;
+
 
 interface LoginScreenProps extends LoginScreenPropsFromRedux {}
 
@@ -34,6 +39,7 @@ interface LoginScreenState {
     password: string,
     performRedirectToHome: boolean,
 }
+
 
 class LoginScreen extends Component<LoginScreenProps, LoginScreenState> {
     constructor(props: LoginScreenProps) {
